@@ -16,7 +16,15 @@ module Polycon
         ]
 
         def call(date:, professional:, name:, surname:, phone:, notes: nil)
-          warn "TODO: Implementar creación de un turno con fecha '#{date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar creación de un turno con fecha '#{date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            appointment = Polycon::Models::Appointment.create(date, professional, name, surname, phone, notes)
+            appointment.save()
+          rescue => e
+            warn e.message
+          else
+            puts "Se creó el turno exitosamente"
+          end
         end
       end
 
@@ -31,7 +39,18 @@ module Polycon
         ]
 
         def call(date:, professional:)
-          warn "TODO: Implementar detalles de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar detalles de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            appointment = Polycon::Models::Appointment.load(date, professional)
+            puts "- Professional: #{appointment.professional.name}"
+            puts "- Date: #{appointment.date_time.strftime("%Y-%m-%d %H:%M")}"
+            puts "- Name: #{appointment.name}"
+            puts "- Surname: #{appointment.surname}"
+            puts "- Phone: #{appointment.phone}"
+            puts "- Notes: #{appointment.notes}"
+          rescue => e
+            warn e.message
+          end
         end
       end
 
@@ -46,7 +65,15 @@ module Polycon
         ]
 
         def call(date:, professional:)
-          warn "TODO: Implementar borrado de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar borrado de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            appointment = Polycon::Models::Appointment.load(date, professional)
+            appointment.cancel()
+          rescue => e
+            warn e.message
+          else
+            puts "Appointment cancelado"
+          end
         end
       end
 
@@ -60,7 +87,15 @@ module Polycon
         ]
 
         def call(professional:)
-          warn "TODO: Implementar borrado de todos los turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar borrado de todos los turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            professional = Polycon::Models::Professional.load(professional)
+            professional.cancel_all()
+          rescue => e
+            warn e.message
+          else
+            puts "Appointments del profesional '#{professional.name}' cancelados"
+          end
         end
       end
 
@@ -75,8 +110,18 @@ module Polycon
           '"Alma Estevez" --date="2021-09-16" # Lists appointments for Alma Estevez on the specified date'
         ]
 
-        def call(professional:)
-          warn "TODO: Implementar listado de turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+        def call(professional:, date: nil)
+          #warn "TODO: Implementar listado de turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            professional = Polycon::Models::Professional.load(professional)
+            lista = professional.appointments_list(date)
+            puts "Listado de los appointments del profesional '#{professional.name}':"
+            lista.each do | appointment |
+              puts "- #{appointment}"
+            end
+          rescue => e
+            warn e.message
+          end
         end
       end
 
@@ -92,7 +137,15 @@ module Polycon
         ]
 
         def call(old_date:, new_date:, professional:)
-          warn "TODO: Implementar cambio de fecha de turno con fecha '#{old_date}' para que pase a ser '#{new_date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar cambio de fecha de turno con fecha '#{old_date}' para que pase a ser '#{new_date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            appointment = Polycon::Models::Appointment.load(old_date, professional)
+            appointment.reschedule(new_date)
+          rescue => e
+            warn e.message
+          else
+            puts "Se modificó la fecha y hora exitosamente"
+          end
         end
       end
 
@@ -113,7 +166,16 @@ module Polycon
         ]
 
         def call(date:, professional:, **options)
-          warn "TODO: Implementar modificación de un turno de la o el profesional '#{professional}' con fecha '#{date}', para cambiarle la siguiente información: #{options}.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar modificación de un turno de la o el profesional '#{professional}' con fecha '#{date}', para cambiarle la siguiente información: #{options}.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            appointment = Polycon::Models::Appointment.load(date, professional)
+            appointment.edit(**options)
+            appointment.update()
+          rescue => e
+            warn e.message
+          else
+            puts "Los datos se modificaron exitosamente"
+          end
         end
       end
     end

@@ -12,7 +12,15 @@ module Polycon
         ]
 
         def call(name:, **)
-          warn "TODO: Implementar creación de un o una profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar creación de un o una profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            professional = Polycon::Models::Professional.create(name)
+            professional.save()
+          rescue => e
+            warn e.message
+          else
+            puts "Se creó el profesional con nombre '#{professional.name}'"
+          end
         end
       end
 
@@ -27,7 +35,15 @@ module Polycon
         ]
 
         def call(name: nil)
-          warn "TODO: Implementar borrado de la o el profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar borrado de la o el profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            professional = Polycon::Models::Professional.load(name)
+            professional.delete()
+          rescue => e
+            warn e.message
+          else
+            puts "El profesional con nombre '#{professional.name}' fue borrado"
+          end          
         end
       end
 
@@ -39,7 +55,15 @@ module Polycon
         ]
 
         def call(*)
-          warn "TODO: Implementar listado de profesionales.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar listado de profesionales.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            puts "Listado de profesionales:"
+            Polycon::Models::Professional.list().each do | professional |
+              puts professional
+            end
+          rescue => e
+            warn e.message
+          end
         end
       end
 
@@ -54,7 +78,15 @@ module Polycon
         ]
 
         def call(old_name:, new_name:, **)
-          warn "TODO: Implementar renombrado de profesionales con nombre '#{old_name}' para que pase a llamarse '#{new_name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          #warn "TODO: Implementar renombrado de profesionales con nombre '#{old_name}' para que pase a llamarse '#{new_name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            professional = Polycon::Models::Professional.load(old_name)
+            professional.rename(new_name)
+          rescue => e
+            warn e.message
+          else
+            puts "Profesional '#{old_name}' renombrado a '#{new_name}'"
+          end
         end
       end
     end
