@@ -108,6 +108,7 @@ Las excepciones manejadas en esta aplicación son las siguientes:
 * `ProfessionalCantBeDeletedError`: indica que un profesional no puede borrarse ya que tiene consultas pendientes.
 * `AppointmentAlreadyExistsError`: indica que ya existe una consulta en esa fecha para ese profesional.
 * `AppointmentDoesntExistError`: indica que no se encontró una consulta en esa fecha para ese profesional.
+* `AppointmentCantBeCanceled`: indica que el appointment no puede ser cancelado ya que el mismo ya fue realizado.
 
 Estas excepciones están definidas en el archivo `lib/polycon/exceptions/polyconexception.rb`.
 
@@ -123,7 +124,7 @@ En el archivo `lib/polycon/persistance/polyconfile.rb`, dentro de la clase `Poly
 
 * `save_professional`: guarda un profesional, creando un directorio con su nombre, en la carpeta ".polycon" del directorio personal del usuario que ejecute la aplicación. 
 * `delete_professional`: elimina un profesional, borrando el directorio con su nombre.
-* `exist_professional`: verifica si existe un profesional con el nombre recibido como parámetro, verificando si existe un directorio con dicho nombre.
+* `exist_professional?`: verifica si existe un profesional con el nombre recibido como parámetro, verificando si existe un directorio con dicho nombre.
 * `rename_professional`: renombra al profesional, modificando el nombre del directorio. 
 * `load_professionals`: retorna un arreglo que contiene a todos los profesionales guardados.
 * `save_appointment`: guarda una consulta, creando un archivo con el nombre dado por la fecha y hora de consulta, el cual almacena el apellido, nombre, número de teléfono y notas (en caso de que existan) de la persona que solicitó el turno, dentro del directorio del profesional que atenderá dicha consulta.
@@ -140,6 +141,8 @@ Los modelos que implementé para la aplicación son la clase `Professional` y la
 
 En la clase `Professional` se definen los métodos necesarios para manipular estos objetos, tales como:
 
+* `create`: método de clase que retorna una instancia que representa al profesional.
+
 * `save`: método de instancia que guarda el profesional, previamente verificando que no exista otro profesional con el mismo nombre.
 
 * `rename`: método de instancia que modifica el nombre del profesional, verificando que éste sea válido y no exista otro profesional con el mismo nombre.
@@ -148,9 +151,9 @@ En la clase `Professional` se definen los métodos necesarios para manipular est
 
 * `has_appointment?`: método de instancia que indica si el profesional tiene un appointment en la fecha y hora recibida como parámetro.
 
-* `delete`: método de instancia que borra al profesional, en caso de que este no tenga ningún appointment.
+* `delete`: método de instancia que borra al profesional, en caso de que este no tenga ningún appointment por realizar.
 
-* `cancel_all`: método de instancia que cancela todos los appointments del profesional.
+* `cancel_all`: método de instancia que cancela todos los appointments del profesional que no hayan sido realizados.
 
 * `appointments_list`: método de instancia que retorna un arreglo con todos los appointments del profesional, opcionalmente filtrados por una fecha recibida como parámetro.
 
@@ -161,6 +164,8 @@ En la clase `Professional` se definen los métodos necesarios para manipular est
 * `load`: método de clase que retorna la instancia del profesional guardado con el nombre recibido como parámetro, previamente verificando que el nombre sea válido y que exista un profesional con dicho nombre.
 
 En la clase `Appointment` se definen los métodos necesarios para manipular estos objetos, tales como:
+
+* `create`: método de clase que retorna una instancia de un nuevo appointment, en caso de que la fecha y hora del mismo sea mayor a la actual.
 
 * `save`: método de instancia que guarda el appointment, previamente verificando que no exista otro appointment a la misma fecha y hora para el profesional.
 
@@ -173,6 +178,8 @@ En la clase `Appointment` se definen los métodos necesarios para manipular esto
 * `load`: método de clase que retorna el appointment del profesional para la fecha y hora indicados.
 
 * `exists`: método de clase que indica si ya existe un appointment del profesional para la fecha y hora indicados.
+
+* En el método `initialize` del appointment se llevan a cabo las validaciones de sus atributos (a partir del llamado a los setters de dichos atributos).
 
 ### Algunos comentarios
 
