@@ -172,7 +172,9 @@ En la clase `Appointment` se definen los métodos necesarios para manipular esto
 
 * `update`: método de instancia que actualiza los datos del appointment.
 
-* `reschedule`: método de instancia que cambia la fecha y hora del appointment por la recibida como parámetro, previamente verificando que la misma sea válida y no exista otro appointment en la misma fecha y hora para el profesional. 
+* `reschedule`: método de instancia que cambia la fecha y hora del appointment por la recibida como parámetro, previamente verificando que la misma sea válida, que el appointment no haya sido realizado, que no exista otro appointment en la misma fecha y hora para el profesional, y que la nueva fecha y hora sea mayor a la actual.
+
+* `cancel`: método de instancia que cancela el appointment, previamente verificando que la fecha y hora del mismo sea mayor a la actual.
 
 * `edit`: método de instancia que recibe una lista de parámetros nombrados para modificar atributos del appointment (nombre de la persona, apellido, número de teléfono y notas).
 
@@ -188,7 +190,7 @@ En la clase `Appointment` se definen los métodos necesarios para manipular esto
 
 * Un appointment se considera finalizado cuando su fecha y hora es mayor a la actual.
 
-* Puede editarse y mostrarse la información de un appointment aunque esta ya haya finalizado.
+* Puede editarse y mostrarse la información de un appointment aunque este ya haya finalizado.
 
 * No puede cambiarse la fecha y hora de un appointment que ya fue realizado.
 
