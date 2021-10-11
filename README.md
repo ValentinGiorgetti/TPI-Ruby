@@ -192,9 +192,9 @@ En la clase `Appointment` se definen los métodos necesarios para manipular esto
 
 * Puede editarse y mostrarse la información de un appointment aunque este ya haya finalizado.
 
-* No puede cambiarse la fecha y hora de un appointment que ya fue realizado.
-
 * El listado de appointments de un profesional muestra todos los appointments de dicho profesional (no se compara con la fecha y hora actual).
+
+* No puede hacerse un reschedule de un appointment que ya fue realizado.
 
 * La operación de cancelar un appointment solo está disponible para appointments que no se han realizado (se compara con la fecha y hora actual).
 
