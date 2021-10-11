@@ -94,6 +94,12 @@ module Polycon
             end
         end
 
+        class AppointmentCantBeRescheduled < PolyconException
+            def initialize
+                super("No se puede cambiar la fecha y hora del appointment ya que el mismo ya fue realizado")
+            end
+        end
+
     end
 
 end

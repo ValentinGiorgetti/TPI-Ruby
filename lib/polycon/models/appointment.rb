@@ -66,6 +66,9 @@ module Polycon
             end
 
             def reschedule(new_date_time)
+                if finished?
+                    raise Polycon::Exceptions::AppointmentCantBeRescheduled.new()
+                end
                 new_date_time = Polycon::Helper::PolyconHelper.validate_creation_date_time(new_date_time)
                 if Appointment.exists?(@professional, new_date_time)
                     raise Polycon::Exceptions::AppointmentAlreadyExistsError.new()

@@ -50,7 +50,7 @@ module Polycon
             def self.validate_surname(surname)
                 surname = surname.strip
                 if surname.empty?
-                    raise Polycon::Exceptions::EmptyNameError.new()
+                    raise Polycon::Exceptions::EmptySurnameError.new()
                 end
                 if not surname.match(/^[a-z A-Z]+$/)
                     raise Polycon::Exceptions::InvalidSurnameError.new()

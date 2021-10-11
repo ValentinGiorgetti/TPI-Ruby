@@ -109,6 +109,7 @@ Las excepciones manejadas en esta aplicación son las siguientes:
 * `AppointmentAlreadyExistsError`: indica que ya existe una consulta en esa fecha para ese profesional.
 * `AppointmentDoesntExistError`: indica que no se encontró una consulta en esa fecha para ese profesional.
 * `AppointmentCantBeCanceled`: indica que el appointment no puede ser cancelado ya que el mismo ya fue realizado.
+* `AppointmentCantBeRescheduled`: indica que no se puede cambiar la fecha y hora del appointment ya que el mismo ya fue realizado.
 
 Estas excepciones están definidas en el archivo `lib/polycon/exceptions/polyconexception.rb`.
 
@@ -188,6 +189,8 @@ En la clase `Appointment` se definen los métodos necesarios para manipular esto
 * Un appointment se considera finalizado cuando su fecha y hora es mayor a la actual.
 
 * Puede editarse y mostrarse la información de un appointment aunque esta ya haya finalizado.
+
+* No puede cambiarse la fecha y hora de un appointment que ya fue realizado.
 
 * El listado de appointments de un profesional muestra todos los appointments de dicho profesional (no se compara con la fecha y hora actual).
 

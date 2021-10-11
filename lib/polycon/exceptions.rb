@@ -12,6 +12,7 @@ module Polycon
         autoload :AppointmentAlreadyExistsError, 'polycon/exceptions/polyconexception'
         autoload :AppointmentDoesntExistError, 'polycon/exceptions/polyconexception'
         autoload :AppointmentCantBeCanceled, 'polycon/exceptions/polyconexception'
+        autoload :AppointmentCantBeRescheduled, 'polycon/exceptions/polyconexception'
         autoload :ProfessionalAlreadyExistsError, 'polycon/exceptions/polyconexception'
         autoload :ProfessionalDoesntExistError, 'polycon/exceptions/polyconexception'
         autoload :ProfessionalCantBeDeletedError, 'polycon/exceptions/polyconexception'
