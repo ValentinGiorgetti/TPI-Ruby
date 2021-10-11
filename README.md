@@ -111,7 +111,7 @@ Las excepciones manejadas en esta aplicación son las siguientes:
 * `AppointmentCantBeCanceled`: indica que el appointment no puede ser cancelado ya que el mismo ya fue realizado.
 * `AppointmentCantBeRescheduled`: indica que no se puede cambiar la fecha y hora del appointment ya que el mismo ya fue realizado.
 
-Estas excepciones están definidas en el archivo `lib/polycon/exceptions/polyconexception.rb`.
+Estas excepciones están definidas en el archivo `lib/polycon/exceptions/polyconexception.rb`. En caso de que alguna de estas excepciones ocurra, la misma será capturada por el comando, el cuál mostrará el mensaje correspondiente de la excepción.
 
 ### Helpers
 
