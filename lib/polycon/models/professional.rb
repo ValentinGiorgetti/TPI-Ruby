@@ -88,6 +88,51 @@ module Polycon
                 appointments_list().select{ | appointment | not appointment.finished? }
             end
 
+            def self.all_appointments_by_date(date, professional_name = nil)
+                Polycon::Helper::PolyconHelper.validate_date(date)
+                
+                if professional_name
+                    professional = load(professional_name)
+                end
+
+                appointments = list().collect { | professional | professional.appointments_list(date) }
+
+                appointments.flatten!
+
+                if professional_name
+                    appointments.select!{ | appointment | appointment.professional.name == professional.name }
+                end
+
+                appointments
+            end
+
+            def self.all_appointments_by_week(initial_date, professional_name = nil)
+                initial_date = Polycon::Helper::PolyconHelper.validate_date(initial_date)
+                initial_date = Polycon::Helper::PolyconHelper.week_start(initial_date)
+
+                if professional_name
+                    professional = load(professional_name)
+                end
+                
+                appointments = []
+                
+                list().each do | professional |
+                    date = initial_date
+                    for i in 1..7 do
+                        appointments << professional.appointments_list(date.strftime("%Y-%m-%d"))
+                        date = date.next_day
+                    end
+                end
+                
+                appointments.flatten!
+
+                if professional_name
+                    appointments.select!{ | appointment | appointment.professional.name == professional.name }
+                end
+
+                appointments
+            end
+
         end
 
     end
