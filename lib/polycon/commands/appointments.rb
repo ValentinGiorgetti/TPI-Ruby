@@ -178,6 +178,54 @@ module Polycon
           end
         end
       end
+
+      class ListByDate < Dry::CLI::Command
+        desc 'Muestra los turnos en un día particular, opcionalmente filtrando por un o una profesional'
+
+        argument :date, required: true, desc: 'Full date'
+        option :professional, required: false, desc: 'Full name of the professional'
+
+        example [
+          '"2021-09-16" --professional="Alma Estevez"'
+        ]
+
+        def call(date:, professional: nil)
+          begin
+            appointment = Polycon::Models::Professional.all_appointments_by_date(date, professional)
+            Polycon::Exporter::HTMLExporter.export_appointments_by_date(appointment, date, professional)
+          rescue => e
+            warn e.message
+          else
+            path = File.join("#{Dir.home}", "appointments.html")
+            puts "Se exportó el resultado en #{path}"
+          end
+        end
+      end
+
+      class ListByWeek < Dry::CLI::Command
+        desc 'Muestra los turnos en una semana particular, opcionalmente filtrando por un o una profesional'
+
+        argument :date, required: true, desc: 'Full date'
+        option :professional, required: false, desc: 'Full name of the professional'
+
+        example [
+          '"2021-09-16" --professional="Alma Estevez"'
+        ]
+
+        def call(date:, professional: nil)
+          begin
+            appointments = Polycon::Models::Professional.all_appointments_by_week(date, professional)
+            Polycon::Exporter::HTMLExporter.export_appointments_by_week(appointments, date, professional)
+          rescue => e
+            warn e.message
+            raise e
+          else
+            path = File.join("#{Dir.home}", "appointments.html")
+            puts "Se exportó el resultado en #{path}"
+          end
+        end
+      end
+
     end
   end
 end
