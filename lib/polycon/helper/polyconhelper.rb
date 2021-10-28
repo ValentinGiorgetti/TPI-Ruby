@@ -36,6 +36,10 @@ module Polycon
                  date
             end
 
+            def self.week_start(date) # retorna la fecha del lunes de la semana recibida por parámetro
+                date - (date.wday - 1) % 7
+            end
+
             def self.validate_name(name)
                 name = name.strip
                 if name.empty?
