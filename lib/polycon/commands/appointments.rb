@@ -218,7 +218,6 @@ module Polycon
             Polycon::Exporter::HTMLExporter.export_appointments_by_week(appointments, date, professional)
           rescue => e
             warn e.message
-            raise e
           else
             path = File.join("#{Dir.home}", "appointments.html")
             puts "Se exportó el resultado en #{path}"

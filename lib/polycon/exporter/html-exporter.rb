@@ -6,7 +6,7 @@ module Polycon
 
         class HTMLExporter
 
-            def self.crear_hash_horas()
+            def self.create_hours_hash()
                 hash = {}
                 for i in 9..21 do
                     hash["#{i}:00"] = []
@@ -14,26 +14,26 @@ module Polycon
                 hash
             end
 
-            def self.crear_hash_dias(initial_date)
+            def self.create_days_hash(initial_date)
                 hash = {}
                 for i in 1..7 do
-                    hash[initial_date.strftime("%Y-%m-%d")] = crear_hash_horas()
+                    hash[initial_date.strftime("%Y-%m-%d")] = create_hours_hash()
                     initial_date = initial_date.next_day
                 end
                 hash
             end
 
             def self.export_appointments_by_date(appointments, date, professional_name = nil)
-                hash = crear_hash_horas()
+                hash = create_hours_hash()
                 appointments.each do | appointment |
-                    hora = appointment.date_time.strftime("%H:%M")
-                    hash[hora] << appointment
+                    hour = appointment.date_time.strftime("%H:%M")
+                    hash[hour] << appointment
                 end
 
-                tempalte_path = File.join("#{Dir.pwd}", "lib", "polycon", "exporter", "template-por-dia.html.erb")
-                template = ERB.new(File.read(tempalte_path))
+                template_path = File.join("#{Dir.pwd}", "lib", "polycon", "exporter", "appointments-by-date-template.html.erb")
+                template = ERB.new(File.read(template_path))
                 File.open("#{Dir.home}/appointments.html", "w") do | file |
-                    file.write(template.result_with_hash(date: date, appointments: hash, professional: professional_name))
+                    file.write(template.result_with_hash(date: date, appointments: hash, professional_name: professional_name))
                 end
             end
 
@@ -41,19 +41,31 @@ module Polycon
                 initial_date = Polycon::Helper::PolyconHelper.validate_date(initial_date)
                 initial_date = Polycon::Helper::PolyconHelper.week_start(initial_date)
                 
-                hash = crear_hash_dias(initial_date)
+                hash = create_days_hash(initial_date)
 
                 appointments.each do | appointment |
-                    hora = appointment.date_time.strftime("%H:%M")
-                    dia = appointment.date
-                    hash[dia][hora] << appointment
+                    hour = appointment.date_time.strftime("%H:%M")
+                    day = appointment.date
+                    hash[day][hour] << appointment
                 end
 
-                tempalte_path = File.join("#{Dir.pwd}", "lib", "polycon", "exporter", "template-por-semana.html.erb")
-                template = ERB.new(File.read(tempalte_path))
+                template_path = File.join("#{Dir.pwd}", "lib", "polycon", "exporter", "appointments-by-week-template.html.erb")
+                template = ERB.new(File.read(template_path))
                 File.open("#{Dir.home}/appointments.html", "w") do | file |
-                    file.write(template.result_with_hash(appointments: hash, inicial: initial_date, horas: crear_hash_horas(), professional: professional_name))
+                    file.write(template.result_with_hash(appointments: hash, initial_date: initial_date, hours: create_hours_hash(), professional_name: professional_name))
                 end
+            end
+
+            def self.get_day_of_week(day)
+                day_name = Date.strptime(day, "%Y-%m-%d").strftime("%A")
+
+                {"Monday" => "Lunes",
+                 "Tuesday" => "Martes",
+                 "Wednesday" => "Miércoles",
+                 "Thursday" => "Jueves",
+                 "Friday" => "Viernes",
+                 "Saturday" => "Sábado",
+                 "Sunday" => "Domingo"}[day_name]
             end
 
         end
