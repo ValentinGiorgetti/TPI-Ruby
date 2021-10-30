@@ -26,7 +26,7 @@ module Polycon
             def self.export_appointments_by_date(appointments, date, professional_name = nil)
                 hash = create_hours_hash()
                 appointments.each do | appointment |
-                    hour = appointment.date_time.strftime("%H:%M")
+                    hour = appointment.hour
                     hash[hour] << appointment
                 end
 
@@ -44,7 +44,7 @@ module Polycon
                 hash = create_days_hash(initial_date)
 
                 appointments.each do | appointment |
-                    hour = appointment.date_time.strftime("%H:%M")
+                    hour = appointment.hour
                     day = appointment.date
                     hash[day][hour] << appointment
                 end

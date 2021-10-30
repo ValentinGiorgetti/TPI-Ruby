@@ -9,9 +9,15 @@ module Polycon
             def self.validate_date_time(date_time)
                 begin
                     date_time = DateTime.strptime(date_time, "%Y-%m-%d %H:%M")
+                    if (not (9..21).include?(date_time.hour))
+                        raise Polycon::Exceptions::InvalidDateTimeError.new()
+                    end
                 rescue
                     begin
                         date_time = DateTime.strptime(date_time, "%Y-%m-%d_%H-%M")
+                        if (not (9..21).include?(date_time.hour))
+                            raise Polycon::Exceptions::InvalidDateTimeError.new()
+                        end
                     rescue
                         raise Polycon::Exceptions::InvalidDateTimeError.new()
                     end

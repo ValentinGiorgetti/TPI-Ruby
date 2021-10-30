@@ -180,7 +180,7 @@ module Polycon
       end
 
       class ListByDate < Dry::CLI::Command
-        desc 'Muestra los turnos en un día particular, opcionalmente filtrando por un o una profesional'
+        desc 'Muestra los turnos de un día particular, opcionalmente filtrando por un o una profesional'
 
         argument :date, required: true, desc: 'Full date'
         option :professional, required: false, desc: 'Full name of the professional'
@@ -203,7 +203,7 @@ module Polycon
       end
 
       class ListByWeek < Dry::CLI::Command
-        desc 'Muestra los turnos en una semana particular, opcionalmente filtrando por un o una profesional'
+        desc 'Muestra los turnos de una semana particular, opcionalmente filtrando por un o una profesional'
 
         argument :date, required: true, desc: 'Full date'
         option :professional, required: false, desc: 'Full name of the professional'

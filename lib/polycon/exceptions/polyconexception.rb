@@ -42,7 +42,7 @@ module Polycon
         
         class InvalidDateTimeError < PolyconException
             def initialize
-                super("Se ingresó una fecha y hora inválida")
+                super("Se ingresó una fecha y hora inválida. Recuerde que el horario de atención es de 9:00 a 21:00")
             end
         end
 

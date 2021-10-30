@@ -96,6 +96,10 @@ module Polycon
             def date
                 @date_time.strftime("%Y-%m-%d")
             end
+
+            def hour
+                @date_time.strftime("%H:%M")
+            end
                         
         end
 
