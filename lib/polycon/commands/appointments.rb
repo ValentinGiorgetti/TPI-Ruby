@@ -191,12 +191,12 @@ module Polycon
 
         def call(date:, professional: nil)
           begin
-            appointment = Polycon::Models::Professional.all_appointments_by_date(date, professional)
-            Polycon::Exporter::HTMLExporter.export_appointments_by_date(appointment, date, professional)
+            appointments = Polycon::Models::Professional.all_appointments_by_date(date, professional)
+            Polycon::Exporter::HTMLExporter.export_appointments_by_date(appointments, date, professional)
           rescue => e
             warn e.message
           else
-            path = File.join("#{Dir.home}", "appointments.html")
+            path = Polycon::Exporter::HTMLExporter.file_path()
             puts "Se exportó el resultado en #{path}"
           end
         end
@@ -219,7 +219,7 @@ module Polycon
           rescue => e
             warn e.message
           else
-            path = File.join("#{Dir.home}", "appointments.html")
+            path = Polycon::Exporter::HTMLExporter.file_path()
             puts "Se exportó el resultado en #{path}"
           end
         end

@@ -113,7 +113,7 @@ Las excepciones manejadas en esta aplicación son las siguientes:
 * `InvalidPhoneError`: indica que el usuario ingresó número de teléfono inválido (contiene caracteres que no son dígitos).
 * `InvalidDateTimeError`: indica que el usuario ingresó una fecha y hora inválida.
 * `OldDateTimeError`: indica que el usuario ingresó una fecha y hora que ya pasó.
-* `InvalidDateError`: indica que el usuario ingresó una fecha inválida o un horario que no se corresponde con el horario de atención del policonsultario (bloques de 1 hora, de 9:00 hs a 21:00 hs).
+* `InvalidDateError`: indica que el usuario ingresó una fecha inválida o un horario que no se corresponde con el horario de atención del policonsultorio (bloques de 1 hora, de 9:00 hs a 21:00 hs).
 * `ProfessionalAlreadyExistsError`: indica que un profesional ya existe.
 * `ProfessionalDoesntExistError`: indica que un profesional no existe.
 * `ProfessionalCantBeDeletedError`: indica que un profesional no puede borrarse ya que tiene consultas pendientes.
@@ -177,9 +177,9 @@ En la clase `Professional` se definen los métodos necesarios para manipular est
 
 * `load`: método de clase que retorna la instancia del profesional guardado con el nombre recibido como parámetro, previamente verificando que el nombre sea válido y que exista un profesional con dicho nombre.
 
-[+] `all_appointments_by_date`: método de clase que retorna todos los appointments del día indicado, opcionalmente filtrando por un profesional.
+[+] `all_appointments_by_date`: método de clase que retorna todos los appointments del día indicado, opcionalmente filtrando por un profesional (no se compara con la fecha y hora actual).
 
-[+] `all_appointments_by_week`: método de clase que retorna todos los appointments de la semana indicada, opcionalmente filtrando por un profesional. Se calcula cuál es la fecha del día lunes correspondiente a la semana de la fecha recibida por parámetro. Por ejemplo, si se ingresa la fecha "2021-10-14" (día jueves), el día inicial será "2021-10-11" (día lunes).
+[+] `all_appointments_by_week`: método de clase que retorna todos los appointments de la semana indicada, opcionalmente filtrando por un profesional. Se calcula cuál es la fecha del día lunes correspondiente a la semana de la fecha recibida por parámetro (no se compara con la fecha y hora actual). Por ejemplo, si se ingresa la fecha "2021-10-14" (día jueves), el día inicial será "2021-10-11" (día lunes).
 
 En la clase `Appointment` se definen los métodos necesarios para manipular estos objetos, tales como:
 
@@ -203,29 +203,37 @@ En la clase `Appointment` se definen los métodos necesarios para manipular esto
 
 * `exists`: método de clase que indica si ya existe un appointment del profesional para la fecha y hora indicados.
 
+[+] `valid_hours`: método de clase que retorna una lista con los horarios de atención del policonsultorio (de 9:00 hs a 21:00 hs).
+
 * En el método `initialize` del appointment se llevan a cabo las validaciones de sus atributos (a partir del llamado a los setters de dichos atributos).
 
 ### [+] Exportación de grillas diarias o semanales
 
-La clase `HTMLExporter` se encarga de realizar la exportación de las grillas de appointments diarios o semanales. Se utilizó la librería "ERB" (Embedded RuBy) para poder generar las plantillas HTML de dichas grillas.
+La clase `HTMLExporter` se encarga de realizar la exportación de las grillas de appointments diarios o semanales. Se utilizó "ERB" (Embedded RuBy) para poder generar las plantillas HTML de dichas grillas. ERB proporciona un sistema de plantillas potente que brinda la capacidad de insertar código Ruby a cualquier documento de texto plano.
+
+Descripción de los métodos utilizados:
 
 * `create_hours_hash`: método de clase que retorna un hash donde las claves se corresponden con los horarios de atención del policonsultorio (de 9:00 hs a 21:00 hs) y el valor son listas vacías, las cuales posteriormente almacenarán los appointments que se correspondan con dicho horario de comienzo.
 
 * `create_days_hash`: método de clase que retorna un hash donde las claves se corresponden con las fechas de la semana recibida por parámetro y el valor son el hash de horas mencionado en el punto anterior. Posteriormente, este hash almacenará los appointments de cada horario de cada día de la semana.
 
-* `export_appointments_by_date`: método de clase que recibe el listado de appointments de un día en particular y los inserta en la plantilla correspondiente a la grilla de appointments diarios, generando el documento HTML resultante en "appointments.html" dentro del home del usuario que esté ejecutando el comando.
+* `export_appointments_by_date`: método de clase que recibe el listado de appointments de un día en particular y los inserta en la plantilla correspondiente a la grilla de appointments diarios, generando el documento HTML resultante en el archivo "appointments.html" dentro del home del usuario que esté ejecutando el comando.
 
-* `export_appointments_by_week`: método de clase que recibe el listado de appointments de una semana en particular y los inserta en la plantilla correspondiente a la grilla de appointments semanales, generando el documento HTML resultante en "appointments.html" dentro del home del usuario que esté ejecutando el comando.
+* `export_appointments_by_week`: método de clase que recibe el listado de appointments de una semana en particular y los inserta en la plantilla correspondiente a la grilla de appointments semanales, generando el documento HTML resultante en el archivo "appointments.html" dentro del home del usuario que esté ejecutando el comando.
 
 * `get_day_of_week`: método de clase que se utiliza para obtener el día de semana correspondiente a la fecha recibida por parámetro.
 
+* `file_path`: método de clase que retorna el path donde se almacenará la grilla exportada (archivo "appointments.html" dentro del home del usuario que esté ejecutando el comando).
+
 Las grillas serán representadas como tablas, donde el eje vertical representa el horario de atención (de 9:00 hs a 21:00 hs) y el eje horizontal representa el o los días (en el caso de una grilla semanal) a mostrar.
 
-Cada celda representará un bloque donde pueden haber turnos de uno/a o más profesionales, en los cuales se mostrará el nombre de paciente que tiene el turno y qué profesional lo atiende, o quedará en blanco en caso que el turno no esté tomado.
+Cada celda representará un bloque donde pueden haber turnos de uno/a o más profesionales, en los cuales se mostrará el nombre y apellido del paciente que tiene el turno y qué profesional lo atiende, o quedará en blanco en caso que el turno no esté tomado.
 
 La grilla mostrará la información en bloques de duración fija (de 1 hora cada bloque), y cada turno se considera que durará el total de tiempo del bloque en el que esté.
 
-Se agregaron dos nuevos comandos en el apartado de appointmens:
+Se asume que los turnos de un/a mismo/a profesional no se solaparán dentro de un mismo bloque (es decir, no habrán sobreturnos).
+
+Se agregaron dos nuevos comandos en el apartado de appointments:
 
 * `list-by-date`: muestra los turnos de un día particular, opcionalmente filtrando por un o una profesional. Ejemplo "appointments list-by-date '2021-09-16' --professional='Alma Estevez'".
 
@@ -248,3 +256,5 @@ Se agregaron dos nuevos comandos en el apartado de appointmens:
 * Para eliminar un profesional este no debe tener ningún appointment por realizar dentro de su directorio (se compara con la fecha y hora actual).
 
 [+] Los bloques de horarios que se mostrarán en las grillas serán de 1 hora, y abarcará desde las 9:00 hasta las 21:00, por ende, cuando se ingrese una fecha y hora, se verificará que el horario comience en alguno de dichos bloques (por ejemplo, un turno no podría crearse a las 9:30 hs, sino a las 9:00 hs, es decir, al comienzo del bloque).
+
+[+] El resultado de la exportación de las grillas diarias o semanales se almacenará siempre en el archivo "appointments.html" dentro del home del usuario que esté ejecutando el comando (este podría sobreescribirse).

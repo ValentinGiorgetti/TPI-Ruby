@@ -90,16 +90,13 @@ module Polycon
 
             def self.all_appointments_by_date(date, professional_name = nil)
                 Polycon::Helper::PolyconHelper.validate_date(date)
-                
-                if professional_name
-                    professional = load(professional_name)
-                end
 
                 appointments = list().collect { | professional | professional.appointments_list(date) }
 
                 appointments.flatten!
 
                 if professional_name
+                    professional = load(professional_name)
                     appointments.select!{ | appointment | appointment.professional.name == professional.name }
                 end
 
@@ -109,10 +106,6 @@ module Polycon
             def self.all_appointments_by_week(initial_date, professional_name = nil)
                 initial_date = Polycon::Helper::PolyconHelper.validate_date(initial_date)
                 initial_date = Polycon::Helper::PolyconHelper.week_start(initial_date)
-
-                if professional_name
-                    professional = load(professional_name)
-                end
                 
                 appointments = []
                 
@@ -127,6 +120,7 @@ module Polycon
                 appointments.flatten!
 
                 if professional_name
+                    professional = load(professional_name)
                     appointments.select!{ | appointment | appointment.professional.name == professional.name }
                 end
 

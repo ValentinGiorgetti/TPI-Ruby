@@ -65,6 +65,10 @@ module Polycon
                 professional.has_appointment?(date_time)
             end
 
+            def self.valid_hours()
+                (9..21).collect { | hour | "#{hour}:00" }
+            end
+
             def reschedule(new_date_time)
                 if finished?
                     raise Polycon::Exceptions::AppointmentCantBeRescheduled.new()

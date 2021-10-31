@@ -8,9 +8,7 @@ module Polycon
 
             def self.create_hours_hash()
                 hash = {}
-                for i in 9..21 do
-                    hash["#{i}:00"] = []
-                end
+                Polycon::Models::Appointment.valid_hours().each { | hour | hash[hour] = [] }
                 hash
             end
 
@@ -24,16 +22,16 @@ module Polycon
             end
 
             def self.export_appointments_by_date(appointments, date, professional_name = nil)
-                hash = create_hours_hash()
+                hours_hash = create_hours_hash()
                 appointments.each do | appointment |
                     hour = appointment.hour
-                    hash[hour] << appointment
+                    hours_hash[hour] << appointment
                 end
 
                 template_path = File.join("#{Dir.pwd}", "lib", "polycon", "exporter", "appointments-by-date-template.html.erb")
                 template = ERB.new(File.read(template_path))
-                File.open("#{Dir.home}/appointments.html", "w") do | file |
-                    file.write(template.result_with_hash(date: date, appointments: hash, professional_name: professional_name))
+                File.open(file_path(), "w") do | file |
+                    file.write(template.result_with_hash(date: date, appointments: hours_hash, professional_name: professional_name))
                 end
             end
 
@@ -41,18 +39,18 @@ module Polycon
                 initial_date = Polycon::Helper::PolyconHelper.validate_date(initial_date)
                 initial_date = Polycon::Helper::PolyconHelper.week_start(initial_date)
                 
-                hash = create_days_hash(initial_date)
+                days_hash = create_days_hash(initial_date)
 
                 appointments.each do | appointment |
                     hour = appointment.hour
                     day = appointment.date
-                    hash[day][hour] << appointment
+                    days_hash[day][hour] << appointment
                 end
 
                 template_path = File.join("#{Dir.pwd}", "lib", "polycon", "exporter", "appointments-by-week-template.html.erb")
                 template = ERB.new(File.read(template_path))
-                File.open("#{Dir.home}/appointments.html", "w") do | file |
-                    file.write(template.result_with_hash(appointments: hash, initial_date: initial_date, hours: create_hours_hash(), professional_name: professional_name))
+                File.open(file_path(), "w") do | file |
+                    file.write(template.result_with_hash(appointments: days_hash, initial_date: initial_date, hours: create_hours_hash(), professional_name: professional_name))
                 end
             end
 
@@ -66,6 +64,10 @@ module Polycon
                  "Friday" => "Viernes",
                  "Saturday" => "Sábado",
                  "Sunday" => "Domingo"}[day_name]
+            end
+
+            def self.file_path()
+                File.join("#{Dir.home}", "appointments.html")
             end
 
         end
