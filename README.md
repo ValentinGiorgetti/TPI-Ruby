@@ -209,9 +209,11 @@ En la clase `Appointment` se definen los métodos necesarios para manipular esto
 
 ### [+] Exportación de grillas diarias o semanales
 
-La clase `HTMLExporter` se encarga de realizar la exportación de las grillas de appointments diarios o semanales. Se utilizó "ERB" (Embedded RuBy) para poder generar las plantillas HTML de dichas grillas. ERB una gema que se encuentra en la librería estándar del lenguaje que proporciona un sistema de plantillas potente el cuál brinda la capacidad de insertar código Ruby a cualquier documento de texto plano.
+Decidí realizar la exportación de las grillas en formato HTML, ya que este es un formato visualmente rico y es un lenguaje de marcado que permite fácilmente indicar la estructura de los documentos mediante etiquetas. Además, este lenguaje ofrece una gran adaptabilidad y estructuración lógica, y puede visualizarse desde cualquier navegador web. 
 
-Descripción de los métodos implementados en la clase HTMLExporter:
+Decidí utilizar "ERB" (Embedded RuBy) para poder generar las plantillas HTML de las grillas de appointments diarios o semanales, ya que ERB una gema que se encuentra en la librería estándar del lenguaje que proporciona un sistema de plantillas potente el cuál brinda la capacidad de insertar código Ruby a cualquier documento de texto plano.
+
+Descripción de los métodos implementados en la clase `HTMLExporter`, la cuál se encarga de realizar la exportación de las grillas de appointments diarios o semanales:
 
 * `create_hours_hash`: método de clase que retorna un hash donde las claves se corresponden con los horarios de inicio de los turnos del policonsultorio y el valor son listas vacías, las cuales posteriormente almacenarán los appointments que se correspondan con dicho horario de comienzo.
 
@@ -226,6 +228,8 @@ Descripción de los métodos implementados en la clase HTMLExporter:
 * `file_path`: método de clase que retorna el path donde se almacenará la grilla exportada (archivo "appointments.html" dentro del home del usuario que esté ejecutando el comando).
 
 Las grillas serán representadas como tablas, donde el eje vertical representa el horario de atención (muestra los horarios de inicio de los turnos del policonsultorio, es decir, bloques de 1 hora, de 9:00 hs a 22:00 hs) y el eje horizontal representa el o los días a mostrar (en el caso de una grilla semanal se mostrarán los días lunes a domingo de dicha semana).
+
+Los templates HTML utilizados para realizar la exportación de las grillas diarias o semanales están definidos en los archivos `appointments-by-date-template.html.erb` y `appointments-by-week-template.html.erb` respectivamente. En el template lo que se hace es crear la tabla a partir del listado de appointments recibido.
 
 Cada celda representará un bloque donde pueden haber turnos de uno/a o más profesionales, en los cuales se mostrará el nombre y apellido del paciente que tiene el turno y qué profesional lo atiende, o quedará en blanco en caso que el turno no esté tomado.
 
