@@ -66,7 +66,7 @@ module Polycon
             end
 
             def self.valid_hours()
-                (9..21).collect { | hour | "#{hour}:00" }
+                hours = (9..21).collect { | hour | (hour >= 10) ? "#{hour}:00" : "0#{hour}:00" }
             end
 
             def reschedule(new_date_time)

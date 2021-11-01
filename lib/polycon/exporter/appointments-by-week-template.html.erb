@@ -27,9 +27,9 @@
             </tr>
             <% hours.each_key do | hour | %>
                 <tr>
-                    <td scope="row" class="text-center"><%= hour %></td>
+                    <th scope="row" class="text-center"><%= hour %></th>
                     <% appointments.each_key do | day | %>
-                        <td scope="row" class="text-center" style="width:auto">
+                        <td class="text-center" style="width:auto">
                             <table class="table table-bordered center">
                                 <% appointments[day][hour].each do | appointment | %>
                                     <tr> <td> Paciente <%= appointment.name%> <%= appointment.surname%> - Profesional <%= appointment.professional.name%> </td> </tr>
