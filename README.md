@@ -181,6 +181,8 @@ En la clase `Professional` se definen los métodos necesarios para manipular est
 
 [+] `all_appointments_by_week`: método de clase que retorna todos los appointments de la semana indicada, opcionalmente filtrando por un profesional (no se compara con la fecha y hora actual). Se calcula cuál es la fecha del día lunes correspondiente a la semana de la fecha recibida por parámetro. Por ejemplo, si se ingresa la fecha "2021-10-14" (día jueves), el día inicial será "2021-10-11" (día lunes).
 
+Estos dos últimos métodos los coloqué en esta clase ya que los responsables de retornar sus appointments serían los profesionales.
+
 En la clase `Appointment` se definen los métodos necesarios para manipular estos objetos, tales como:
 
 * `create`: método de clase que retorna una instancia de un nuevo appointment, en caso de que la fecha y hora del mismo sea mayor a la actual.
