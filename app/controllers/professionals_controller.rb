@@ -1,4 +1,6 @@
 class ProfessionalsController < ApplicationController
+
+  before_action :authenticate_user!
   before_action :set_professional, only: %i[ show edit update destroy ]
 
   # GET /professionals or /professionals.json
