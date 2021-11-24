@@ -14,7 +14,7 @@
 
   <div class="field">
     <%= form.label :date %>
-    <%= form.date_select :date %>
+    <%= form.date_select :date, order: [:day, :month, :year] %>
   </div>
 
   <div class="field">

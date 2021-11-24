@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<p style="color:red"><%= alert %></p>
 
 <h1>Professionals</h1><br>
 
@@ -16,9 +17,9 @@
         <tr>
           <td><%= professional.name %></td>
           <td>
-            <%= link_to 'Show', professional %>
-            <%= link_to 'Edit', edit_professional_path(professional) %>
-            <%= link_to 'Destroy', professional, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Show', professional if can? :read, Professional %>
+            <%= link_to 'Rename', edit_professional_path(professional) if can? :update, Professional %>
+            <%= link_to 'Destroy', professional, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Professional %>
           </td>
         </tr>
       <% end %>
@@ -28,4 +29,4 @@
 
 <br>
 
-<%= link_to 'New Professional', new_professional_path %>
+<%= link_to 'New Professional', new_professional_path if can? :create, Professional %>

@@ -2,5 +2,5 @@
 
 <%= render 'form', appointment: @appointment, editing: true, add_date_time_field: !Appointment.find(@appointment.id).finished? %>
 
-<%= link_to 'Show', @appointment %> |
+<%= link_to 'Show', @appointment if can? :read, Appointment %> |
 <%= link_to 'Back', appointments_path %>

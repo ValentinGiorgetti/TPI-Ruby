@@ -2,6 +2,7 @@ class ProfessionalsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_professional, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /professionals or /professionals.json
   def index
@@ -51,9 +52,14 @@ class ProfessionalsController < ApplicationController
 
   # DELETE /professionals/1 or /professionals/1.json
   def destroy
-    @professional.destroy
+    if @professional.has_pending_appointments?
+      alert = "The professional can't be deleted because of pending appointment/s"
+    else
+      @professional.destroy
+      notice = "The professional and his/her appointment/s were successfully destroyed"
+    end
     respond_to do |format|
-      format.html { redirect_to professionals_url, notice: "Professional was successfully destroyed." }
+      format.html { redirect_to professionals_url, notice: notice, alert: alert }
       format.json { head :no_content }
     end
   end

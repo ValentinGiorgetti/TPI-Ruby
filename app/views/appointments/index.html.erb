@@ -22,10 +22,10 @@
         <td><%= appointment.date_time_string %></td>
         <td><%= link_to appointment.professional.name, appointment.professional %></td>
         <td>
-          <%= link_to 'Show', appointment %>
-          <%= link_to 'Edit', edit_appointment_path(appointment) %>
+          <%= link_to 'Show', appointment if can? :read, Appointment %>
+          <%= link_to 'Edit', edit_appointment_path(appointment) if can? :update, Appointment %>
           <% if not appointment.finished? %>
-            <%= link_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Cancel', appointment, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Appointment %>
           <% end %>
         </td>
       </tr>
@@ -35,7 +35,7 @@
 
 <br>
 
-<% if not @professional %>
+<% if not @professional and can? :create, Appointment %>
   <%= link_to 'New Appointment', new_appointment_path %>
 <% else %>
   <%= link_to 'New Appointment', new_professional_appointment_path %>

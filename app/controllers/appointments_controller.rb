@@ -3,6 +3,7 @@ class AppointmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_professional
   before_action :set_appointment, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /appointments or /appointments.json
   def index
@@ -83,7 +84,7 @@ class AppointmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def appointment_params
-      if @appointment and Appointment.find(@appointment.id).finished?
+      if @appointment && @appointment.id && Appointment.find_by_id(@appointment.id).finished?
         tmp = params.require(:appointment).permit(:name, :surname, :phone, :notes, :professional_id)
       else
         tmp = params.require(:appointment).permit(:name, :surname, :phone, :notes, :date_time, :professional_id)

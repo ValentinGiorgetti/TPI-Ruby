@@ -6,6 +6,7 @@ class Appointment < ApplicationRecord
 
     validate :validate_phone, :validate_date_time
 
+    scope :not_finished, -> { where("DATE(date_time) > DATE(?)", Date.today) }
 
     def validate_phone
         if not phone.to_s.match(/^[\d]+$/)
@@ -44,7 +45,7 @@ class Appointment < ApplicationRecord
 
         if not professional_id.empty?
             professional = Professional.find(professional_id)
-            appointments.where(profesional: professional)
+            appointments = appointments.where(professional: professional)
         end
         
         appointments
@@ -57,7 +58,7 @@ class Appointment < ApplicationRecord
 
         if not professional_id.empty?
             professional = Professional.find(professional_id)
-            appointments.where(profesional: professional)
+            appointments = appointments.where(professional: professional)
         end
 
         appointments
