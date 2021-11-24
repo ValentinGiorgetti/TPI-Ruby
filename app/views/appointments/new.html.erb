@@ -1,5 +1,9 @@
 <h1>New Appointment</h1>
 
-<%= render 'form', appointment: @appointment %>
+<%= render 'form', appointment: @appointment, editing: false, add_date_time_field: true %>
 
-<%= link_to 'Back', appointments_path %>
+<% if not @professional %>
+    <%= link_to 'Back', appointments_path %>
+<% else %>
+    <%= link_to 'Back', professional_appointments_path(@professional) %>
+<% end %>

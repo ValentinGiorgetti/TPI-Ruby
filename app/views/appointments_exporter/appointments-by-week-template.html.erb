@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Turnos por semana</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <style>
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+        </style>
+    </head>
+    <div>
+        <h1 class="text-center">Turnos desde el día <%= initial_date.strftime("%d-%m-%Y")%> hasta el día <%= initial_date.next_day(6).strftime("%d-%m-%Y")%> <%= "del profesional #{professional_name}" if not professional_name.empty? %></h1> <br>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th scope="col" class="text-center">Horario / Día</th>
+                <% appointments.each_key do | day | %>
+                    <th scope="col" class="text-center"><%="#{AppointmentsExporterHelper.get_day_of_week(Date.strptime(day, "%d-%m-%Y"))} (#{day})"%></th>
+                <% end %>
+            </tr>
+            <% hours.each_key do | hour | %>
+                <tr>
+                    <th scope="row" class="text-center"><%= hour %></th>
+                    <% appointments.each_key do | day | %>
+                        <td class="text-center" style="width:auto">
+                            <table class="table table-bordered center">
+                                <% appointments[day][hour].each do | appointment | %>
+                                    <tr> <td> Paciente <%= appointment.name%> <%= appointment.surname%> - Profesional <%= appointment.professional.name%> </td> </tr>
+                                <% end %>
+                            </table>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </table>
+    </div>
+</html>

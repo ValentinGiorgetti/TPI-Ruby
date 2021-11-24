@@ -1,26 +1,30 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Professionals</h1>
+<h1>Professionals</h1><br>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @professionals.each do |professional| %>
+<div style="width:30%">
+  <table class="table table-sm table-striped table-bordered">
+    <thead>
       <tr>
-        <td><%= professional.name %></td>
-        <td><%= link_to 'Show', professional %></td>
-        <td><%= link_to 'Edit', edit_professional_path(professional) %></td>
-        <td><%= link_to 'Destroy', professional, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th class="text-center">Name</th>
+        <th class="text-center">Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @professionals.each do | professional | %>
+        <tr>
+          <td><%= professional.name %></td>
+          <td>
+            <%= link_to 'Show', professional %>
+            <%= link_to 'Edit', edit_professional_path(professional) %>
+            <%= link_to 'Destroy', professional, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 

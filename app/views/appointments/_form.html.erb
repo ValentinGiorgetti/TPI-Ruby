@@ -28,8 +28,30 @@
 
   <div class="field">
     <%= form.label :notes %>
-    <%= form.text_field :notes %>
+    <%= form.text_area :notes %>
   </div>
+
+  <% if add_date_time_field %>
+    <div class="field">
+      <%= form.label :date_time %>
+      <%= form.datetime_select :date_time, order: [:day, :month, :year, :hour], 
+                              :start_year => 2021, :start_hour => 9, 
+                              :end_hour => 21, :discard_minute => true %>
+    </div>
+  <% else %>
+    <p>The date time can't be edited because the appointment is finished </p>
+  <% end %>
+
+  <% if not editing and not @professional %>
+    <div class="field">
+      <%= form.label :professional %>
+      <%= form.collection_select :professional_id, @professionals, :id, :name %>
+    </div>
+  <% end %>
+
+  <% if @professional %>
+    <input type="hidden" name="appointment[professional_id]" value="<%= @professional.id %>">
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>

@@ -20,5 +20,16 @@
   <%= @appointment.notes %>
 </p>
 
-<%= link_to 'Edit', edit_appointment_path(@appointment) %> |
+<p>
+  <strong>Date time:</strong>
+  <%= @appointment.date_time_string %>
+</p>
+
+<p>
+  <strong>Professional:</strong>
+  <%= @appointment.professional.name %>
+</p>
+
+<%= link_to 'Edit', edit_appointment_path(@appointment, @professional) %> |
+<%= link_to 'Cancel', @appointment, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', appointments_path %>

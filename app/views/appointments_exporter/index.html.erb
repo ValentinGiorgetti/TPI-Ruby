@@ -1,0 +1,35 @@
+<h1>Export appointments</h1>
+
+<%= form_for :form_data, url: appointments_exporter_submit_path do |form| %>
+
+  <% if @form_data and @form_data.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @form_data.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Filter by date / week' %>
+    <%= form.collection_select :filter_by, ["Week", "Date"], :itself, :itself %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Filter by professional' %>
+    <%= form.collection_select :professional_id, @professionals, :id, :name, { include_blank: 'None' } %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>
+
