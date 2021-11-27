@@ -1,4 +1,4 @@
-<%= form_with(model: appointment) do |form| %>
+<%= form_with(model: appointment, url: url) do |form| %>
   <% if appointment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
@@ -35,8 +35,8 @@
     <div class="field">
       <%= form.label :date_time %>
       <%= form.datetime_select :date_time, order: [:day, :month, :year, :hour], 
-                              :start_year => 2021, :start_hour => 9, 
-                              :end_hour => 21, :discard_minute => true %>
+                               :start_year => 2021, :start_hour => 9, 
+                               :end_hour => 21, :discard_minute => true %>
     </div>
   <% else %>
     <p>The date time can't be edited because the appointment is finished </p>

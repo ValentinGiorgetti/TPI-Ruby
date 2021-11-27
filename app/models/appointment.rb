@@ -6,7 +6,7 @@ class Appointment < ApplicationRecord
 
     validate :validate_phone, :validate_date_time
 
-    scope :not_finished, -> { where("DATE(date_time) > DATE(?)", Date.today) }
+    scope :not_finished, -> { where("date_time > ?", Date.today) }
 
     def validate_phone
         if not phone.to_s.match(/^[\d]+$/)

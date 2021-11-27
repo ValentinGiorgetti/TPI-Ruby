@@ -10,6 +10,7 @@ class Ability
 
     if user.role == "admin"
       can :manage, :all
+      #can :cancel_all, Appointment
     else
       if user.role == "assist"
         can :manage, Appointment

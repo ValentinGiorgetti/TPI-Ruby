@@ -29,10 +29,8 @@ class ProfessionalsController < ApplicationController
     respond_to do |format|
       if @professional.save
         format.html { redirect_to @professional, notice: "Professional was successfully created." }
-        format.json { render :show, status: :created, location: @professional }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @professional.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,10 +40,8 @@ class ProfessionalsController < ApplicationController
     respond_to do |format|
       if @professional.update(professional_params)
         format.html { redirect_to @professional, notice: "Professional was successfully updated." }
-        format.json { render :show, status: :ok, location: @professional }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @professional.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -60,7 +56,6 @@ class ProfessionalsController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to professionals_url, notice: notice, alert: alert }
-      format.json { head :no_content }
     end
   end
 

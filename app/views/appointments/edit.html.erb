@@ -1,6 +1,6 @@
 <h1>Editing Appointment</h1>
 
-<%= render 'form', appointment: @appointment, editing: true, add_date_time_field: !Appointment.find(@appointment.id).finished? %>
+<%= render 'form', appointment: @appointment, editing: true, add_date_time_field: !Appointment.find(@appointment.id).finished?, url: route(appointment_path) %>
 
-<%= link_to 'Show', @appointment if can? :read, Appointment %> |
-<%= link_to 'Back', appointments_path %>
+<%= link_to 'Show', route(appointment_path) if can? :read, Appointment %> |
+<%= link_to 'Back', :back %>

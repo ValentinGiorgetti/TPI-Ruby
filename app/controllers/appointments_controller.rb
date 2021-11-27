@@ -3,14 +3,24 @@ class AppointmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_professional
   before_action :set_appointment, only: %i[ show edit update destroy ]
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:cancel_all]
+
+  helper_method :route
 
   # GET /appointments or /appointments.json
   def index
     if @professional
-      @appointments = @professional.appointments
+      @appointments = @professional.appointments.order(date_time: 'desc')
     else
       @appointments = Appointment.order(date_time: 'desc')
+    end
+
+    if request.post?
+      date = request.params["anything"]["date"]
+      if !date.empty?
+        date = Date.parse(date)
+        @appointments = @appointments.where(date_time: date.beginning_of_day..date.end_of_day)
+      end
     end
   end
 
@@ -30,7 +40,6 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/1/edit
   def edit
-    @url = appointment_path()
   end
 
   # POST /appointments or /appointments.json
@@ -39,11 +48,9 @@ class AppointmentsController < ApplicationController
     @professionals = Professional.all
     respond_to do |format|
       if @appointment.save
-        format.html { redirect_to @appointment, notice: "Appointment was successfully created." }
-        format.json { render :show, status: :created, location: @appointment }
+        format.html { redirect_to route(appointment_path(@appointment)), notice: "Appointment was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -52,11 +59,9 @@ class AppointmentsController < ApplicationController
   def update
     respond_to do |format|
       if @appointment.update(appointment_params)
-        format.html { redirect_to @appointment, notice: "Appointment was successfully updated." }
-        format.json { render :show, status: :ok, location: @appointment }
+        format.html { redirect_to route(appointment_path(@appointment)), notice: "Appointment was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @appointment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -72,8 +77,12 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to appointments_url, notice: notice, alert: alert }
-      format.json { head :no_content }
     end
+  end
+
+  def cancel_all
+    @professional.appointments.not_finished.destroy_all
+    redirect_to professional_appointments_path, notice: "Appointments were successfully canceled"
   end
 
   private
@@ -96,18 +105,17 @@ class AppointmentsController < ApplicationController
     def set_professional
       if params[:professional_id]
         @professional = Professional.find(params[:professional_id])
-        @url = professional_appointments_url(@professional)
       else
         @professional = nil
-        @url = appointments_url()
       end
     end
 
-    def appointments_path(professional_id = nil)
-      if not professional_id
-        "/appointments"
+    def route(string)
+      professional = request.params[:professional_id]
+      if professional
+        "/professionals/#{professional}#{string}"
       else
-        "/professionals/#{professional_id}/appointments"
+        string
       end
     end
 end

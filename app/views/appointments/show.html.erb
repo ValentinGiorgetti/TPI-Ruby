@@ -30,6 +30,6 @@
   <%= @appointment.professional.name %>
 </p>
 
-<%= link_to 'Edit', edit_appointment_path(@appointment, @professional) if can? :update, Appointment %> |
-<%= link_to 'Cancel', @appointment, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Appointment %> |
-<%= link_to 'Back', appointments_path %>
+<%= link_to 'Edit', route(edit_appointment_path) if can? :update, Appointment %> |
+<%= link_to 'Cancel', route(appointments_path), method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Appointment %> |
+<%= link_to 'Back', route(appointments_path) %>

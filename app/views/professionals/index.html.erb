@@ -29,4 +29,4 @@
 
 <br>
 
-<%= link_to 'New Professional', new_professional_path if can? :create, Professional %>
+<%= button_to 'New professional', new_professional_path, method: :get, :class => 'btn btn-success' if can? :create, Professional %>

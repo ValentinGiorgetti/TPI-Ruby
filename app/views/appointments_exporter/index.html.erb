@@ -1,4 +1,4 @@
-<h1>Export appointments</h1>
+<h1>Export appointments</h1><br>
 
 <%= form_for :form_data, url: appointments_exporter_submit_path do |form| %>
 
@@ -25,10 +25,10 @@
   <div class="field">
     <%= form.label 'Filter by professional' %>
     <%= form.collection_select :professional_id, @professionals, :id, :name, { include_blank: 'None' } %>
-  </div>
-
+  </div><br>
+  
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Export appointments', :class => 'btn btn-success', data: { disable_with: false } %>
   </div>
 
 <% end %>
