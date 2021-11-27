@@ -19,7 +19,7 @@
           <td>
             <%= link_to 'Show', professional if can? :read, Professional %>
             <%= link_to 'Rename', edit_professional_path(professional) if can? :update, Professional %>
-            <%= link_to 'Destroy', professional, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Professional %>
+            <%= link_to 'Delete', professional, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Professional %>
           </td>
         </tr>
       <% end %>

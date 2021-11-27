@@ -72,7 +72,7 @@ class AppointmentsController < ApplicationController
       alert = "No se puede cancelar el appointment ya que el mismo ya fue realizado"
     else
       @appointment.destroy
-      notice = "Appointment was successfully destroyed."
+      notice = "Appointment was successfully canceled."
     end
 
     respond_to do |format|
