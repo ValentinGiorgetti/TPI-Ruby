@@ -1,5 +1,4 @@
 class AppointmentsExporterController < ApplicationController
-  before_action :authenticate_user!
 
   def index
     @professionals = Professional.all

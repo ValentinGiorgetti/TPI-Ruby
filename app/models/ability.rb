@@ -12,11 +12,11 @@ class Ability
       can :manage, :all
       #can :cancel_all, Appointment
     else
-      if user.role == "assist"
+      if user.role == "assistant"
         can :manage, Appointment
         can :read, Professional
       else
-        if user.role == "query"
+        if user.role == "consultant"
           can :read, Appointment
           can :read, Professional
         end

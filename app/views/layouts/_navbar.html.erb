@@ -5,9 +5,16 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
-      <li><a href="<%= professionals_path %>">Professionals</a></li>
-      <li><a href="<%= appointments_path %>">Appointments</a></li>
-      <li><a href="<%= appointments_exporter_index_path %>">Export appointments</a></li>
+      <% if can? :read, Professional %>
+        <li><a href="<%= professionals_path %>">Professionals</a></li>
+      <% end %>
+      <% if can? :read, Appointment %>
+        <li><a href="<%= appointments_path %>">Appointments</a></li>
+        <li><a href="<%= appointments_exporter_index_path %>">Export appointments</a></li>
+      <% end %>
+      <% if can? :read, User %>
+        <li><a href="<%= users_path %>">Users</a></li>
+      <% end %>
       <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
     </ul>
   </div>

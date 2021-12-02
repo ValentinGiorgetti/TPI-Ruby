@@ -1,11 +1,10 @@
 class AppointmentsController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_professional
   before_action :set_appointment, only: %i[ show edit update destroy ]
   load_and_authorize_resource :except => [:cancel_all]
 
-  helper_method :route
+  helper_method :route, :filter_route
 
   # GET /appointments or /appointments.json
   def index
@@ -117,5 +116,9 @@ class AppointmentsController < ApplicationController
       else
         string
       end
+    end
+
+    def filter_route(string)
+      route(string) + "_filtered"
     end
 end

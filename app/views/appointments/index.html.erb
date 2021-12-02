@@ -3,7 +3,7 @@
 
 <h1>Appointments</h1><br>
 
-<%= form_for :anything, url: request.path + (request.path.include?("filtered") ? "" : "_filtered") do |form| %>
+<%= form_for :anything, url: filter_route(appointments_path) do |form| %>
 
   <div class="field">
     <%= form.label :date %>
