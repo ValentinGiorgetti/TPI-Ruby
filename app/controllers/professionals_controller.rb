@@ -3,12 +3,12 @@ class ProfessionalsController < ApplicationController
   before_action :set_professional, only: %i[ show edit update destroy ]
   load_and_authorize_resource
 
-  # GET /professionals or /professionals.json
+  # GET /professionals
   def index
     @professionals = Professional.all
   end
 
-  # GET /professionals/1 or /professionals/1.json
+  # GET /professionals/1
   def show
   end
 
@@ -21,7 +21,7 @@ class ProfessionalsController < ApplicationController
   def edit
   end
 
-  # POST /professionals or /professionals.json
+  # POST /professionals
   def create
     @professional = Professional.new(professional_params)
 
@@ -34,7 +34,7 @@ class ProfessionalsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /professionals/1 or /professionals/1.json
+  # PATCH/PUT /professionals/1
   def update
     respond_to do |format|
       if @professional.update(professional_params)
@@ -45,7 +45,7 @@ class ProfessionalsController < ApplicationController
     end
   end
 
-  # DELETE /professionals/1 or /professionals/1.json
+  # DELETE /professionals/1
   def destroy
     if @professional.has_pending_appointments?
       alert = "The professional can't be deleted because of pending appointment/s"

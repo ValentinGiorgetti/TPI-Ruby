@@ -3,12 +3,12 @@ class UsersController < ApplicationController
   before_action :set_roles
   load_and_authorize_resource
 
-  # GET /users or /users.json
+  # GET /users
   def index
     @users = User.all
   end
 
-  # GET /users/1 or /users/1.json
+  # GET /users/1
   def show
   end
 
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def edit
   end
 
-  # POST /users or /users.json
+  # POST /users
   def create
     @user = User.new(user_params)
 
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1 or /users/1.json
+  # PATCH/PUT /users/1
   def update
     respond_to do |format|
       if @user.update(user_params)
@@ -45,11 +45,19 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1 or /users/1.json
+  # DELETE /users/1
   def destroy
-    @user.destroy
+    notice = ""
+
+    if @user.email != current_user.email
+      @user.destroy
+      notice = "User was successfully destroyed"
+    else
+      notice = "You can't delete your own user"
+    end
+
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed" }
+      format.html { redirect_to users_url, notice: notice }
     end
   end
 
@@ -67,6 +75,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :surname, :email, :password, :rol)
+      params.require(:user).permit(:name, :surname, :email, :password, :role)
     end
 end
