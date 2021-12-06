@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @appointment.name %>
+</p>
+
+<p>
+  <strong>Surname:</strong>
+  <%= @appointment.surname %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @appointment.phone %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @appointment.notes %>
+</p>
+
+<p>
+  <strong>Date time:</strong>
+  <%= @appointment.date_time_string %>
+</p>
+
+<p>
+  <strong>Professional:</strong>
+  <%= @appointment.professional.name %>
+</p>
+
+<%= link_to 'Edit', route(edit_appointment_path) if can? :update, Appointment %> |
+<% if not @appointment.finished? %>
+  <%= link_to 'Cancel', route(appointment_path), method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Appointment %> |
+<% end %>
+<%= link_to 'Back', route(appointments_path) %>

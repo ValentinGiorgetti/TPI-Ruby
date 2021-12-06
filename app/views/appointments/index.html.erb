@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+<p style="color:red"><%= alert %></p>
+
+<h1><%= @professional ? "#{@professional.name}'s appointments" : "Appointments"%></h1><br>
+
+<%= form_for :anything, url: filter_route(appointments_path) do |form| %>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Filter by date', :class => 'btn btn-success', data: { disable_with: false } %>
+  </div>
+
+<% end %>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center">Patient name</th>
+      <th class="text-center">Patient surname</th>
+      <th class="text-center">Date time</th>
+      <th class="text-center">Professional</th>
+      <th class="text-center">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @appointments.each do |appointment| %>
+      <tr>
+        <td><%= appointment.name %></td>
+        <td><%= appointment.surname %></td>
+        <td><%= appointment.date_time_string %></td>
+        <td><%= link_to appointment.professional.name, appointment.professional %></td>
+        <td>
+          <%= link_to 'Show', route(appointment_path(appointment)) if can? :read, Appointment %>
+          <%= link_to 'Edit', route(edit_appointment_path(appointment)) if can? :update, Appointment %>
+          <% if not appointment.finished? %>
+            <%= link_to 'Cancel', route(appointment_path(appointment)), method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Appointment %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @appointments.size == 0 %>
+  <h3>No appointments were found</h3>
+<% end %>
+
+<br>
+
+<% if not @professional %>
+  <%= button_to 'New appointment', new_appointment_path, method: :get, :class => 'btn btn-success' if can? :create, Appointment %>
+<% else %>
+  <%= button_to 'New appointment', new_professional_appointment_path, method: :get, :class => 'btn btn-success' if can? :create, Appointment %><br>
+  <%= button_to 'Cancel all appointments', cancel_all_appointments_path, method: :post, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' if can? :destroy, Appointment %>
+<% end %>

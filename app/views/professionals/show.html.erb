@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @professional.name %>
+</p>
+
+<%= link_to 'Rename', edit_professional_path(@professional) if can? :update, Professional %> |
+<%= link_to 'Appointments list', professional_appointments_path(@professional) if can? :read, Appointment %> |
+<%= link_to 'Back', professionals_path %>

@@ -1,0 +1,59 @@
+<%= form_with(model: appointment, url: url) do |form| %>
+  <% if appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+        <% appointment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :surname %>
+    <%= form.text_field :surname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :phone %>
+    <%= form.number_field :phone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <% if add_date_time_field %>
+    <div class="field">
+      <%= form.label :date_time %>
+      <%= form.datetime_select :date_time, order: [:day, :month, :year, :hour], 
+                               :start_year => 2021, :start_hour => 9, 
+                               :end_hour => 21, :discard_minute => true %>
+    </div>
+  <% else %>
+    <p>The date time can't be edited because the appointment is finished </p>
+  <% end %>
+
+  <% if not editing and not @professional %>
+    <div class="field">
+      <%= form.label :professional %>
+      <%= form.collection_select :professional_id, @professionals, :id, :name %>
+    </div>
+  <% end %>
+
+  <% if @professional %>
+    <input type="hidden" name="appointment[professional_id]" value="<%= @professional.id %>">
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

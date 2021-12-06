@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+<p style="color:red"><%= alert %></p>
+
+<h1>Professionals</h1><br>
+
+<div style="width:30%">
+  <table class="table table-sm table-striped table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">Name</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @professionals.each do | professional | %>
+        <tr>
+          <td><%= professional.name %></td>
+          <td>
+            <%= link_to 'Show', professional if can? :read, Professional %>
+            <%= link_to 'Rename', edit_professional_path(professional) if can? :update, Professional %>
+            <%= link_to 'Delete', professional, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Professional %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<%= button_to 'New professional', new_professional_path, method: :get, :class => 'btn btn-success' if can? :create, Professional %>
