@@ -8,12 +8,18 @@ class AppointmentsExporterController < ApplicationController
     @form_data = FormData.new(form_data_params())
     @professionals = Professional.all
     if @form_data.valid?
+      professional_name = nil
+      begin
+        professional_name = Professional.find(@form_data.professional_id).name
+      rescue
+        professional_name = nil
+      end
       if @form_data.filter_by == "Date"
         appointments = Appointment.all_appointments_by_date(@form_data.date, @form_data.professional_id)
-        AppointmentsExporterHelper.export_appointments_by_date(appointments, @form_data.date, @form_data.professional_id)
+        AppointmentsExporterHelper.export_appointments_by_date(appointments, @form_data.date, professional_name)
       else
         appointments = Appointment.all_appointments_by_week(@form_data.date, @form_data.professional_id)
-        AppointmentsExporterHelper.export_appointments_by_week(appointments, @form_data.date, @form_data.professional_id)
+        AppointmentsExporterHelper.export_appointments_by_week(appointments, @form_data.date, professional_name)
       end
       send_file AppointmentsExporterHelper.file_path(), type: 'image/jpeg'
     else

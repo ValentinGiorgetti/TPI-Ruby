@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 <p style="color:red"><%= alert %></p>
 
-<h1>Appointments</h1><br>
+<h1><%= @professional ? "#{@professional.name}'s appointments" : "Appointments"%></h1><br>
 
 <%= form_for :anything, url: filter_route(appointments_path) do |form| %>
 
@@ -45,6 +45,10 @@
     <% end %>
   </tbody>
 </table>
+
+<% if @appointments.size == 0 %>
+  <h3>No appointments were found</h3>
+<% end %>
 
 <br>
 

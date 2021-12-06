@@ -54,15 +54,7 @@ module AppointmentsExporterHelper
     end
 
     def self.get_day_of_week(day)
-        day_name = day.strftime("%A")
-
-        {"Monday" => "Lunes",
-         "Tuesday" => "Martes",
-         "Wednesday" => "Miércoles",
-         "Thursday" => "Jueves",
-         "Friday" => "Viernes",
-         "Saturday" => "Sábado",
-         "Sunday" => "Domingo"}[day_name]
+        day.strftime("%A")
     end
 
     def self.file_path()
