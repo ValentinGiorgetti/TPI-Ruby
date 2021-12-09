@@ -53,8 +53,7 @@ class Appointment < ApplicationRecord
 
     def self.all_appointments_by_week(initial_date, professional_id = "")
         initial_date = AppointmentsExporterHelper.week_start(initial_date)
-        
-        appointments = Appointment.where(date_time: initial_date.beginning_of_day..((initial_date + 7.days).end_of_day))
+        appointments = Appointment.where(date_time: initial_date.beginning_of_day..((initial_date + 6.days).end_of_day))
 
         if not professional_id.empty?
             professional = Professional.find(professional_id)
