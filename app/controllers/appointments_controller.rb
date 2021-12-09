@@ -2,7 +2,7 @@ class AppointmentsController < ApplicationController
 
   before_action :set_professional
   before_action :set_appointment, only: %i[ show edit update destroy ]
-  load_and_authorize_resource :except => [:cancel_all]
+  load_and_authorize_resource
 
   helper_method :route, :filter_route
 
@@ -68,7 +68,7 @@ class AppointmentsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to appointments_url, notice: notice, alert: alert }
+      format.html { redirect_to route(appointments_path), notice: notice, alert: alert }
     end
   end
 

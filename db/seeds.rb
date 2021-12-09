@@ -23,4 +23,4 @@ Appointment.create( [ {professional_id: 1, name: 'Carlos', surname: 'Perez', pho
                       {professional_id: 2, name: 'Juana', surname: 'Perez', phone: '12345211', date_time: DateTime.strptime("13/2/2022 15:00", "%d/%m/%Y %H:%M")},
                       {professional_id: 2, name: 'Luciano', surname: 'Flores', phone: '12345215', date_time: DateTime.strptime("14/2/2022 15:00", "%d/%m/%Y %H:%M")},
                       {professional_id: 3, name: 'Martin', surname: 'Flores', phone: '12345210', date_time: DateTime.strptime("15/3/2022 17:00", "%d/%m/%Y %H:%M")},
-                      {professional_id: 3, name: 'Jorge', surname: 'Perez', phone: '12345219', date_time: DateTime.strptime("15/3/2021 21:00", "%d/%m/%Y %H:%M")} ] )
+                      {professional_id: 3, name: 'Jorge', surname: 'Perez', phone: '12345219', date_time: DateTime.strptime("15/3/2022 21:00", "%d/%m/%Y %H:%M")} ] )
