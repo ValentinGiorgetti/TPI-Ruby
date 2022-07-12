@@ -3,6 +3,11 @@ class UsersController < ApplicationController
   before_action :set_roles
   load_and_authorize_resource
 
+  def my_profile
+    @user = @current_user
+    render :show
+  end
+
   # GET /users
   def index
     @users = User.all
@@ -64,13 +69,17 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = params[:id] ? User.find(params[:id]) : @current_user
     end
 
     def set_roles
-      @roles = [ ["Administrator", "admin"],
-                 ["Consultant", "consultant"],
-                 ["Assistant", "assistant"] ]
+      if current_user.role == "administrator"
+        @roles = [ ["Administrator", "administrator"],
+                  ["Consultant", "consultant"],
+                  ["Assistant", "assistant"] ]
+      else
+        @roles = [ [current_user.role.capitalize, current_user.role] ]
+      end
     end
 
     # Only allow a list of trusted parameters through.

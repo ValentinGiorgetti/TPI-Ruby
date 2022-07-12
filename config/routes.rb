@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'appointments_exporter/index'
   post 'appointments_exporter/submit'
 
+  get 'my_profile', to: 'users#my_profile'
+
   scope "/admin" do
     resources :users
   end

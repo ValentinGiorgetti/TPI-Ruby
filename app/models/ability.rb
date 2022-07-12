@@ -8,17 +8,17 @@ class Ability
     #
     user ||= User.new # guest user (not logged in)
 
-    if user.role == "admin"
+    if user.role == "administrator"
       can :manage, :all
       #can :cancel_all, Appointment
     else
+      can :read, Professional
+      can [:my_profile, :show, :update], User, :id => user.id
       if user.role == "assistant"
         can :manage, Appointment
-        can :read, Professional
       else
         if user.role == "consultant"
           can :read, Appointment
-          can :read, Professional
         end
       end
     end
