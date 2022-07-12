@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   devise_scope :user do
     authenticated :user do
       root 'appointments#index', as: :authenticated_root

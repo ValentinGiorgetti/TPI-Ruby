@@ -1,5 +1,7 @@
 Devise.setup do |config|
 
+  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"]
+
   require 'devise/orm/active_record'
 
   config.case_insensitive_keys = [:email]
