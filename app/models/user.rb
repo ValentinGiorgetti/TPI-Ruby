@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
     unless user
       user = User.create(name: data['first_name'], surname: data['last_name'], email: data['email'], 
-                         password: Devise.friendly_token[0,20], role: 'consultant')
+                         password: Devise.friendly_token[0,20], role: 'consultant', new_user: true)
     end
     
     user

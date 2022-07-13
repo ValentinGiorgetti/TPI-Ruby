@@ -8,6 +8,11 @@ class UsersController < ApplicationController
     render :show
   end
 
+  def new_users
+    @users = User.where(new_user: true)
+    render :index
+  end
+
   # GET /users
   def index
     @users = User.all
@@ -43,6 +48,9 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        if @current_user.role == "administrator" 
+          @user.update(new_user: false)
+        end
         format.html { redirect_to @user, notice: "User was successfully updated" }
       else
         format.html { render :edit, status: :unprocessable_entity }
