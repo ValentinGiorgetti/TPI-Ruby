@@ -12,7 +12,7 @@
         <li <%= raw controller.controller_name==('appointments_exporter') ? 'class="active"' : "" %>> <a href="<%= appointments_exporter_index_path %>">Export appointments</a></li>
       <% end %>
       <% if can? :read, User %>
-        <li <%= raw !(controller.action_name==('my_profile') || (controller.controller_name==('users') && (params[:id].to_i==@current_user.id))) ? 'class="active"' : "" %>> <a href="<%= users_path %>">Users</a></li>
+        <li <%= raw ( controller.controller_name==('users') && !(controller.action_name==('my_profile') || (controller.controller_name==('users') && (params[:id].to_i==@current_user.id)))) ? 'class="active"' : "" %>> <a href="<%= users_path %>">Users</a></li>
       <% end %>
       <li <%= raw (controller.action_name==('my_profile') || (controller.controller_name==('users') && (params[:id].to_i==@current_user.id))) ? 'class="active"' : "" %>> <a href="<%= my_profile_path %>">My profile</a></li>
       <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
