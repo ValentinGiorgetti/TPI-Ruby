@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   end
 
   resources :users
-  get 'my_profile', to: 'users#my_profile'
+  resource :user, only: [:show, :edit, :update]
+  get 'my_profile', to: 'users#show'
   get 'new_users', to: 'users#new_users'
 
   resources :appointments

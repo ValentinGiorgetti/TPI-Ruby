@@ -20,5 +20,5 @@
   <%= @user.role.capitalize %>
 </p>
 
-<%= can?(:update, User) ? link_to('Edit', edit_user_path(@user)) : "" %> |
+<%= can?(:update, User) ? link_to('Edit', current_user.role == "administrator" ? edit_user_path(@user) : "/user/edit") : "" %> |
 <%= link_to 'Back', :back %>

@@ -2,5 +2,5 @@
 
 <%= render 'form', user: @user %>
 
-<%= link_to 'Show', @user %> |
+<%= link_to('Show', current_user.role == "administrator" ? user_path(@user) : "/my_profile") %> |
 <%= link_to 'Back', :back %>

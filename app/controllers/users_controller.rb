@@ -1,12 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user
   before_action :set_roles
   load_and_authorize_resource
-
-  def my_profile
-    @user = @current_user
-    render :show
-  end
 
   def new_users
     @users = User.where(new_user: true)
@@ -46,15 +41,15 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        if @current_user.role == "administrator" 
-          @user.update(new_user: false)
-        end
-        format.html { redirect_to @user, notice: "User was successfully updated" }
+    if @user.update(user_params.compact_blank)
+      if current_user.role == "administrator" 
+        @user.update(new_user: false)
+        redirect_to @user, notice: "User was successfully updated"
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        redirect_to '/my_profile', notice: "User was successfully updated"
       end
+    else
+      render :edit
     end
   end
 
@@ -77,7 +72,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = params[:id] ? User.find(params[:id]) : @current_user
+      @user = params[:id] ? User.find(params[:id]) : current_user
     end
 
     def set_roles

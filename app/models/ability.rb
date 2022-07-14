@@ -13,7 +13,7 @@ class Ability
       #can :cancel_all, Appointment
     else
       can :read, Professional
-      can [:my_profile, :show, :update], User, :id => user.id
+      can [:show, :update], User, :id => user.id
       if user.role == "assistant"
         can :manage, Appointment
       else
