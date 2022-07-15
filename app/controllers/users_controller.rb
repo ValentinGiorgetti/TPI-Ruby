@@ -30,12 +30,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created" }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @user.save
+      redirect_to @user, notice: "User was successfully created"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -64,9 +62,7 @@ class UsersController < ApplicationController
       notice = "You can't delete your own user"
     end
 
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: notice }
-    end
+    redirect_to users_url, notice: notice
   end
 
   private
