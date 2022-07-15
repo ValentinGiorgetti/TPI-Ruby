@@ -26,5 +26,10 @@ Rails.application.routes.draw do
     post 'cancel_all_appointments', to: 'appointments#cancel_all'
     match 'appointments_filtered', to: 'appointments#index', via: [:get, :post]
   end
+
+  scope :api do
+    get 'professionals', to: 'api#get_professionals'
+    get 'appointments', to: 'api#get_appointments'
+  end
   
 end
