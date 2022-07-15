@@ -11,9 +11,7 @@ class ApiController < ActionController::Base
             render json: { "description": "Bad parameters" }, status: 400 and return
         end
 
-        appointments = Appointment.not_finished
-
-        render json: appointments and return if parameters.empty?
+        render json: Appointment.not_finished and return if parameters.empty?
 
         begin
             date = Date.parse(params[:date] ? parameters[:date] : parameters[:week])
@@ -22,10 +20,9 @@ class ApiController < ActionController::Base
         end
         
         if params[:date]
-            appointments = appointments.where(date_time: date.all_day)
+            appointments = Appointment.all_appointments_by_date(date)
         else
-            initial_date = AppointmentsExporterHelper.week_start(date)
-            appointments = appointments.where(date_time: initial_date.beginning_of_day..((initial_date + 6.days).end_of_day))
+            appointments = Appointment.all_appointments_by_week(date)
         end
 
         render json: appointments
