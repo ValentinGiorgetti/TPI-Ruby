@@ -6,11 +6,13 @@ Polycon es una herramienta para gestionar los turnos y profesionales de un polic
 
 ## Uso de `polycon` (versión web)
 
-Para la ejecución de la herramienta, es necesario tener una versión reciente de Ruby (2.6 o posterior) y tener instaladas sus dependencias (las cuales se manejan con Bundler).
+1. Clonar el repositorio.
+2. En la raíz del proyecto crear un archivo `.env`, y definir las variables de entorno "DB_USERNAME" y "DB_PASSWORD" (para la conexión a la base de datos), "GOOGLE_CLIENT_ID" y "GOOGLE_CLIENT_SECRET" (para la autenticación con Google).
+3. Instalar las dependencias con el comando `bundle install`.
+4. Ejecutar el comando `rails db:setup` para crear la base de datos junto con algunos datos de ejemplo.
+5. Ejecutar el comando `rails s` para iniciar el servidor. Luego, en la consola se podrá visualizar en qué dirección y puerto está escuchando el servidor (por lo general http://127.0.0.1:3000).
 
-Para iniciar el servidor, se debe ejecutar el comando `rails server`, luego, en la consola podrá visualizar en qué dirección y puerto está escuchando el servidor (por lo general http://127.0.0.1:3000).
-
-En el archivo `db/seeds.rb` puede verse la seed inicial donde se crean algunos usuarios, profesionales y appointments. Para cargar la seed se puede utilizar el comando `rails db:seed`.
+En el archivo [`db/seeds.rb`](https://github.com/ValentinGiorgetti/TPI-Ruby/blob/development/db/seeds.rb) puede verse la seed inicial donde se crean algunos usuarios, profesionales y appointments (se puede volver a cargar con el comando `rails db:seed`). Allí puede encontrarse el email y contraseña de los usuarios de ejemplo, para iniciar como administrador el email es "admin@gmail.com" y la contraseña "123456").
 
 ## Desarrollo
 
