@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user
-  before_action :set_roles
+  before_action :set_roles, :set_user
   load_and_authorize_resource
 
   def new_users
@@ -66,7 +65,6 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = params[:id] ? User.find(params[:id]) : current_user
     end

@@ -30,8 +30,6 @@
   <%= @appointment.professional.name %>
 </p>
 
-<%= link_to 'Edit', route(edit_appointment_path) if can? :update, Appointment %> |
-<% if not @appointment.finished? %>
-  <%= link_to 'Cancel', route(appointment_path), method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Appointment %> |
-<% end %>
-<%= link_to 'Back', route(appointments_path) %>
+<%= generate_edit_button if can? :update, Appointment %>       
+<%= button_to 'Cancel', route(appointment_path), button_options('danger', :delete).merge(data: { confirm: 'Are you sure?' }) if (!@appointment.finished? && can?(:destroy, Appointment)) %>
+<%= generate_back_button %>

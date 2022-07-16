@@ -1,10 +1,9 @@
 class AppointmentsController < ApplicationController
 
+  include ApplicationHelper
   before_action :set_professional
   before_action :set_appointment, only: %i[ show edit update destroy ]
   load_and_authorize_resource
-
-  helper_method :route, :filter_route
 
   def index
     if @professional
@@ -58,7 +57,7 @@ class AppointmentsController < ApplicationController
 
   def destroy
     if @appointment.finished?
-      alert = "No se puede cancelar el appointment ya que el mismo ya fue realizado"
+      alert = "Appointment is finished"
     else
       @appointment.destroy
       notice = "Appointment was successfully canceled."
@@ -95,18 +94,5 @@ class AppointmentsController < ApplicationController
       else
         @professional = nil
       end
-    end
-
-    def route(string)
-      professional = request.params[:professional_id]
-      if professional
-        "/professionals/#{professional}#{string}"
-      else
-        string
-      end
-    end
-
-    def filter_route(string)
-      route(string) + "_filtered"
     end
 end
