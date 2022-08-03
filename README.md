@@ -62,7 +62,7 @@ La clase `AppointmentsExporterController` es el controlador que se encarga de re
 
 ### Autenticación
 
-Para autenticación de usuarios se utilizó la gema `devise`, de esta forma los usuarios podrán iniciar sesión en el sistema, o cerrar su sesión cuando así lo deseen. 
+Para autenticación de usuarios se utilizó la gema `devise`, de esta forma los usuarios podrán iniciar sesión en el sistema, o cerrar su sesión cuando así lo deseen. A su vez, se hizo uso de la gema `omniauth` para ofrecerle al usuario la opción de ingresar al sistema utilizando las credenciales de su cuenta de Google (si es la primera vez que ingresa se registrará al usuario con el rol de consultant).  
 
 ### Autorización
 
