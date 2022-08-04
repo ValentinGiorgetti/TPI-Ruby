@@ -21,11 +21,14 @@ Las siguientes correcciones deben solucionarse de forma obligatoria:
   - Crear una base de datos de cero
   - correr rake db:migrate # <--- Falla!
   - correr sino:
-      rake db:drop
-      rake db:create
-      rake db:migarte # <-- Falla!
-  # La falla es porque 20220712143533_remove_unused_user_fields.rb hace mencion
-  # a campos que no se crear en users
+
+    ```
+    rake db:drop
+    rake db:create
+    rake db:migarte # <-- Falla!
+    # La falla es porque 20220712143533_remove_unused_user_fields.rb hace mencion
+    # a campos que no se crear en users
+    ```
 
 ### Sugerencias del profesor
 
