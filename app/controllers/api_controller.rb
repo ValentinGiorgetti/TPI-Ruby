@@ -14,7 +14,9 @@ class ApiController < ActionController::Base
         render json: Appointment.not_finished and return if parameters.empty?
 
         begin
-            date = Date.parse(params[:date] ? parameters[:date] : parameters[:week])
+            date_string = params[:date] ? parameters[:date] : parameters[:week]
+            raise ArgumentError if date_string.split("-").map{|number| number.scan(/\D/).empty?}.include?(false)
+            date = Date.strptime(date_string, '%d-%m-%Y')
         rescue
             render json: { "description": "Bad parameters" }, status: 400 and return
         end

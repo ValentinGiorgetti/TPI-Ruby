@@ -34,7 +34,7 @@
   <% if current_user.role == "administrator" %>
     <div class="field">
         <%= form.label :role %>
-        <%= form.select :role, options_for_select(@roles) %>
+        <%= form.select :role, options_for_select(@roles, user.role) %>
     </div>
   <% end %>
 
