@@ -51,5 +51,3 @@ test:
 production:
   <<: *default
   database: polycon_production
-  username: polycon
-  password: <%= ENV['POLYCON_DATABASE_PASSWORD'] %>
