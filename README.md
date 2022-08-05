@@ -7,7 +7,7 @@ Polycon es una herramienta para gestionar los turnos y profesionales de un polic
 ## Uso de `polycon` (versión web)
 
 1. Clonar el repositorio.
-2. En la raíz del proyecto crear un archivo `.env`, y definir las variables de entorno "DB_USERNAME" y "DB_PASSWORD" (para la conexión a la base de datos), "GOOGLE_CLIENT_ID" y "GOOGLE_CLIENT_SECRET" (para la autenticación con Google).
+2. En la raíz del proyecto crear un archivo `.env`, y definir las variables de entorno para la conexión a la base de datos ("DB_USERNAME","DB_PASSWORD", "DB_HOST" y "DB_PORT") y para la autenticación con Google ("GOOGLE_CLIENT_ID" y "GOOGLE_CLIENT_SECRET").
 3. Instalar las dependencias con el comando `bundle install`.
 4. Ejecutar el comando `rails db:setup` para crear la base de datos junto con algunos datos de ejemplo.
 5. Ejecutar el comando `rails s` para iniciar el servidor. Luego, en la consola se podrá visualizar en qué dirección y puerto está escuchando el servidor (por lo general http://127.0.0.1:3000).
@@ -62,7 +62,7 @@ La clase `AppointmentsExporterController` es el controlador que se encarga de re
 
 ### Autenticación
 
-Para autenticación de usuarios se utilizó la gema `devise`, de esta forma los usuarios podrán iniciar sesión en el sistema, o cerrar su sesión cuando así lo deseen. A su vez, se hizo uso de la gema `omniauth` para ofrecerle al usuario la opción de ingresar al sistema utilizando las credenciales de su cuenta de Google (si es la primera vez que ingresa se registrará al usuario con el rol de consultant).  
+Para autenticación de usuarios se utilizó la gema `devise`, de esta forma los usuarios podrán iniciar sesión en el sistema, o cerrar su sesión cuando así lo deseen. A su vez, se hizo uso de la gema `omniauth` para ofrecerle al usuario la opción de ingresar al sistema utilizando las credenciales de su cuenta de Google (si es la primera vez que ingresa se registrará al usuario con el rol de consultant). Para que funcione la autenticación con Google se debe acceder a la aplicación desde "http://127.0.0.1:3000/".
 
 ### Autorización
 
