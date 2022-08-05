@@ -17,8 +17,8 @@
 
 <p>
   <strong>Role:</strong>
-  <%= @user.role %>
+  <%= @user.role.capitalize %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= generate_edit_button if can?(:update, User) %>
+<%= generate_back_button %>

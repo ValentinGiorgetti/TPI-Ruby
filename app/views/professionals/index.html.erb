@@ -1,6 +1,6 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Professionals</h1><br>
+
+<p id="notice"><%= notice %></p>
 
 <div style="width:30%">
   <table class="table table-sm table-striped table-bordered">
@@ -13,11 +13,11 @@
 
     <tbody>
       <% @professionals.each do | professional | %>
-        <tr>
+        <tr class="text-center">
           <td><%= professional.name %></td>
           <td>
             <%= link_to 'Show', professional if can? :read, Professional %>
-            <%= link_to 'Rename', edit_professional_path(professional) if can? :update, Professional %>
+            <%= link_to 'Edit', edit_professional_path(professional) if can? :update, Professional %>
             <%= link_to 'Delete', professional, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Professional %>
           </td>
         </tr>
@@ -26,6 +26,10 @@
   </table>
 </div>
 
+<% if @professionals.empty? %>
+  <h3>No professionals were found</h3>
+<% end %>
+
 <br>
 
-<%= button_to 'New professional', new_professional_path, method: :get, :class => 'btn btn-success' if can? :create, Professional %>
+<%= button_to 'New professional', new_professional_path, button_options if can? :create, Professional %>

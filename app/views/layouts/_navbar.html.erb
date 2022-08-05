@@ -1,20 +1,18 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Polycon</a>
-    </div>
+    <div class="navbar-brand">Polycon</div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
       <% if can? :read, Professional %>
-        <li><a href="<%= professionals_path %>">Professionals</a></li>
+        <li <%= raw controller.controller_name==('professionals') ? 'class="active"' : "" %>>  <a href="<%= professionals_path %>">Professionals</a></li>
       <% end %>
       <% if can? :read, Appointment %>
-        <li><a href="<%= appointments_path %>">Appointments</a></li>
-        <li><a href="<%= appointments_exporter_index_path %>">Export appointments</a></li>
+        <li <%= raw controller.controller_name==('appointments') ? 'class="active"' : "" %>> <a href="<%= appointments_path %>">Appointments</a></li>
+        <li <%= raw controller.controller_name==('appointments_exporter') ? 'class="active"' : "" %>> <a href="<%= appointments_exporter_index_path %>">Export appointments</a></li>
       <% end %>
       <% if can? :read, User %>
-        <li><a href="<%= users_path %>">Users</a></li>
+        <li <%= raw ( controller.controller_name==('users') && !(request.path==('/my_profile') || (params[:id].to_i==@current_user.id))) ? 'class="active"' : "" %>> <a href="<%= users_path %>">Users</a></li>
       <% end %>
+      <li <%= raw ((controller.controller_name==('users') && current_user.role != "administrator") || (request.path==('/my_profile') || (controller.controller_name==('users') && (params[:id].to_i==@current_user.id)))) ? 'class="active"' : "" %>> <a href="<%= my_profile_path %>">My profile</a></li>
       <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
     </ul>
   </div>

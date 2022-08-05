@@ -41,7 +41,7 @@ class Appointment < ApplicationRecord
     end
 
     def self.all_appointments_by_date(date, professional_id = "")
-        appointments = Appointment.where(date_time: date.beginning_of_day..date.end_of_day)
+        appointments = Appointment.where(date_time: date.all_day)
 
         if not professional_id.empty?
             professional = Professional.find(professional_id)
@@ -61,5 +61,14 @@ class Appointment < ApplicationRecord
         end
 
         appointments
+    end
+
+    def as_json(options = {})
+        {
+            patient: self.name + " " + self.surname,
+            professional: self.professional.name,
+            date: self.date,
+            hour: self.hour
+        }
     end
 end

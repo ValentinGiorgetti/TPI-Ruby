@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Professional name:</strong>
   <%= @professional.name %>
 </p>
 
-<%= link_to 'Rename', edit_professional_path(@professional) if can? :update, Professional %> |
-<%= link_to 'Appointments list', professional_appointments_path(@professional) if can? :read, Appointment %> |
-<%= link_to 'Back', professionals_path %>
+<%= generate_edit_button if can? :update, Professional %>
+<%= button_to 'Appointments list', professional_appointments_path(@professional), button_options('info') if can? :read, Appointment %>
+<%= generate_back_button %>

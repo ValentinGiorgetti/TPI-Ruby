@@ -25,23 +25,19 @@ class ProfessionalsController < ApplicationController
   def create
     @professional = Professional.new(professional_params)
 
-    respond_to do |format|
-      if @professional.save
-        format.html { redirect_to @professional, notice: "Professional was successfully created." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @professional.save
+      redirect_to @professional, notice: "Professional was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /professionals/1
   def update
-    respond_to do |format|
-      if @professional.update(professional_params)
-        format.html { redirect_to @professional, notice: "Professional was successfully updated." }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @professional.update(professional_params)
+      redirect_to @professional, notice: "Professional was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -53,9 +49,8 @@ class ProfessionalsController < ApplicationController
       @professional.destroy
       notice = "The professional and his/her appointment/s were successfully destroyed"
     end
-    respond_to do |format|
-      format.html { redirect_to professionals_url, notice: notice, alert: alert }
-    end
+    
+    redirect_to professionals_url, notice: notice, alert: alert
   end
 
   private

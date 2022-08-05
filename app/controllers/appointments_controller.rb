@@ -1,10 +1,9 @@
 class AppointmentsController < ApplicationController
 
+  include ApplicationHelper
   before_action :set_professional
   before_action :set_appointment, only: %i[ show edit update destroy ]
   load_and_authorize_resource
-
-  helper_method :route, :filter_route
 
   def index
     if @professional
@@ -40,36 +39,31 @@ class AppointmentsController < ApplicationController
   def create  
     @appointment = Appointment.new(appointment_params)
     @professionals = Professional.all
-    respond_to do |format|
-      if @appointment.save
-        format.html { redirect_to route(appointment_path(@appointment)), notice: "Appointment was successfully created." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    
+    if @appointment.save
+      redirect_to route(appointment_path(@appointment)), notice: "Appointment was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @appointment.update(appointment_params)
-        format.html { redirect_to route(appointment_path(@appointment)), notice: "Appointment was successfully updated." }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @appointment.update(appointment_params)
+      redirect_to route(appointment_path(@appointment)), notice: "Appointment was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @appointment.finished?
-      alert = "No se puede cancelar el appointment ya que el mismo ya fue realizado"
+      alert = "Appointment is finished"
     else
       @appointment.destroy
       notice = "Appointment was successfully canceled."
     end
 
-    respond_to do |format|
-      format.html { redirect_to route(appointments_path), notice: notice, alert: alert }
-    end
+    redirect_to route(appointments_path), notice: notice, alert: alert
   end
 
   def cancel_all
@@ -100,18 +94,5 @@ class AppointmentsController < ApplicationController
       else
         @professional = nil
       end
-    end
-
-    def route(string)
-      professional = request.params[:professional_id]
-      if professional
-        "/professionals/#{professional}#{string}"
-      else
-        string
-      end
-    end
-
-    def filter_route(string)
-      route(string) + "_filtered"
     end
 end
