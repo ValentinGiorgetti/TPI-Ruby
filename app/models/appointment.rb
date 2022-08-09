@@ -72,6 +72,18 @@ class Appointment < ApplicationRecord
         Appointment.where(date_time: start_date.beginning_of_day..end_date.end_of_day)
     end
 
+    def self.find_by_patient_name(name)
+        Appointment.where(name: name)
+    end
+
+    def self.find_by_patient_surname(name)
+        Appointment.where(surname: name)
+    end
+
+    def self.find_by_professional_name(name)
+        Professional.find_by_name(name).collect{ | professional | professional.appointments }.flatten
+    end
+
     def as_json(options = {})
         {
             id: self.id,
