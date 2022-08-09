@@ -1,22 +1,43 @@
 class ApiController < ActionController::Base
 
+    def check_page_parameter(page)
+        (page.to_i.to_s == page) && (page.to_i >= 0)
+    end
+
     def get_professionals
         parameters = request.query_parameters
 
-        if (parameters.size > 1) || (parameters.size == 1 && (!parameters[:id] && !parameters[:name]))
+        if (parameters.empty?) || (parameters.size > 2)
             render json: { "description": "Bad parameters" }, status: 400 and return
         end
 
-        result = Professional.all
+        if (parameters.size == 1) && (!parameters[:id] && !parameters[:page])
+            render json: { "description": "Bad parameters" }, status: 400 and return
+        end
+
+        if (parameters.size == 2) && (!(parameters[:name] && parameters[:page]))
+            render json: { "description": "Bad parameters" }, status: 400 and return
+        end
+
+        if parameters[:page] && !check_page_parameter(parameters[:page])
+            render json: { "description": "Bad parameters" }, status: 400 and return
+        end
+
+        result = nil
 
         if parameters[:id]
-            result = result.where(id: parameters[:id])
+            result = Professional.find_by(id: parameters[:id])
+            render json: { "description": "Not found" }, status: 404 and return if not result
         end
 
         if parameters[:name]
-            result = Professional.find_by_name(parameters[:name])
+            result = Professional.find_by_name(parameters[:name]).page(parameters[:page])
         end
-        
+
+        if not result
+            result = Professional.all.page(parameters[:page])
+        end
+
         render json: result, only: [:id, :name]
     end
 
