@@ -14,13 +14,14 @@ User.create( [ {name: 'Oscar', surname: 'Castilla', email: 'admin@gmail.com', pa
 
 # Creating professionals
 
-Professional.create( [ {name: 'Jose'}, {name: 'Juan'}, {name: 'Marta'} ] )
+100.times do |i|
+  Professional.create!(name: "Profesional #{i}")
+end
 
 #Creating appointments
 
-Appointment.create( [ {professional_id: 1, name: 'Carlos', surname: 'Perez', phone: '12345214', date_time: DateTime.strptime("11/2/2023 13:00", "%d/%m/%Y %H:%M")},
-                      {professional_id: 1, name: 'Alberto', surname: 'Martinez', phone: '12345213', date_time: DateTime.strptime("11/2/2023 15:00", "%d/%m/%Y %H:%M")},
-                      {professional_id: 2, name: 'Juana', surname: 'Perez', phone: '12345211', date_time: DateTime.strptime("11/2/2023 15:00", "%d/%m/%Y %H:%M")},
-                      {professional_id: 2, name: 'Luciano', surname: 'Flores', phone: '12345215', date_time: DateTime.strptime("14/2/2023 15:00", "%d/%m/%Y %H:%M")},
-                      {professional_id: 3, name: 'Martin', surname: 'Flores', phone: '12345210', date_time: DateTime.strptime("15/2/2023 17:00", "%d/%m/%Y %H:%M")},
-                      {professional_id: 3, name: 'Jorge', surname: 'Perez', phone: '12345219', date_time: DateTime.strptime("15/2/2023 21:00", "%d/%m/%Y %H:%M")} ] )
+1000.times do |i|
+  Appointment.create!( professional_id: Professional.all.sample.id,
+                      name: "Nombre #{i}", surname: "Apellido #{i}",
+                      phone: i, date_time: rand(Time.now..(Time.now + 1.month)))
+end
