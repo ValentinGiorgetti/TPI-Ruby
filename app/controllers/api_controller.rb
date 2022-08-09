@@ -1,17 +1,31 @@
 class ApiController < ActionController::Base
 
     def get_professionals
-        render json: Professional.all, only: [:id, :name]
+        parameters = request.query_parameters
+
+        if (parameters.size > 1) || (parameters.size == 1 && (!parameters[:id]))
+            render json: { "description": "Bad parameters" }, status: 400 and return
+        end
+
+        result = Professional.all
+
+        if parameters[:id]
+            result = result.where(id: parameters[:id])
+        end
+        
+        render json: result, only: [:id, :name]
     end
 
     def get_appointments
         parameters = request.query_parameters
         
-        if (parameters.size > 1) || (parameters.size == 1 && (!parameters[:date] && !parameters[:week]))
+        if (parameters.size > 1) || (parameters.size == 1 && (!parameters[:date] && !parameters[:week] && !parameters[:id]))
             render json: { "description": "Bad parameters" }, status: 400 and return
         end
 
         render json: Appointment.not_finished and return if parameters.empty?
+
+        render json: Appointment.where(id: parameters[:id]) and return if parameters[:id]
 
         begin
             date_string = params[:date] ? parameters[:date] : parameters[:week]
