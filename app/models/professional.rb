@@ -5,4 +5,8 @@ class Professional < ApplicationRecord
     def has_pending_appointments?
         not appointments.not_finished.empty?
     end
+
+    def self.find_by_name(name)
+        Professional.where(name: name)
+    end
 end

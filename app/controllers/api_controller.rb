@@ -3,7 +3,7 @@ class ApiController < ActionController::Base
     def get_professionals
         parameters = request.query_parameters
 
-        if (parameters.size > 1) || (parameters.size == 1 && (!parameters[:id]))
+        if (parameters.size > 1) || (parameters.size == 1 && (!parameters[:id] && !parameters[:name]))
             render json: { "description": "Bad parameters" }, status: 400 and return
         end
 
@@ -11,6 +11,10 @@ class ApiController < ActionController::Base
 
         if parameters[:id]
             result = result.where(id: parameters[:id])
+        end
+
+        if parameters[:name]
+            result = Professional.find_by_name(parameters[:name])
         end
         
         render json: result, only: [:id, :name]
