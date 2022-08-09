@@ -63,6 +63,15 @@ class Appointment < ApplicationRecord
         appointments
     end
 
+    def self.check_date_string(date)
+        raise ArgumentError if date.split("-").map{|number| number.scan(/\D/).empty?}.include?(false)
+        Date.strptime(date, '%d-%m-%Y')
+    end
+
+    def self.between_dates(start_date, end_date)
+        Appointment.where(date_time: start_date.beginning_of_day..end_date.end_of_day)
+    end
+
     def as_json(options = {})
         {
             id: self.id,
