@@ -1,7 +1,7 @@
 class ApiController < ActionController::Base
 
     def get_professionals
-        render json: Professional.all, only: [:name]
+        render json: Professional.all, only: [:id, :name]
     end
 
     def get_appointments

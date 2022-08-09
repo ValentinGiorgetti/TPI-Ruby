@@ -65,6 +65,7 @@ class Appointment < ApplicationRecord
 
     def as_json(options = {})
         {
+            id: self.id,
             patient: self.name + " " + self.surname,
             professional: self.professional.name,
             date: self.date,
