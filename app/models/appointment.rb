@@ -2,7 +2,7 @@ class Appointment < ApplicationRecord
     belongs_to :professional
     validates :name, :surname, :phone, :date_time, :professional, presence: true
     validates :date_time, uniqueness: { scope: :professional_id }
-    validates :name, :surname, format: { with: /^[a-z A-Z]+$/, multiline: true }
+    validates :name, :surname, format: { with: /^[a-z A-Z0-9]+$/, multiline: true }
 
     validate :validate_phone, :validate_date_time
 

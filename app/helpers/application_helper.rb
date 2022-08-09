@@ -17,11 +17,7 @@ module ApplicationHelper
     end
 
     def generate_back_button
-        path = {  "appointments" => route(appointments_path),
-                  "professionals" => professionals_path,
-                  "users" => users_path  }
-
-        button_to 'Back', path[controller_name], button_options('primary')
+        button_to 'Back', :back, button_options('primary')
     end
 
     def generate_edit_button

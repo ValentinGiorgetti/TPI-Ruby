@@ -15,7 +15,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
-  host: localhost
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
 
 development:
   <<: *default
@@ -51,5 +52,3 @@ test:
 production:
   <<: *default
   database: polycon_production
-  username: polycon
-  password: <%= ENV['POLYCON_DATABASE_PASSWORD'] %>
