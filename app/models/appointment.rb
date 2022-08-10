@@ -86,7 +86,7 @@ class Appointment < ApplicationRecord
         end
 
         if !start_date
-            return Appointment.where(date_time: end_date.beginning_of_day..end_date.end_of_day)
+            return Appointment.where("date_time <= ?", end_date.end_of_day)
         end
     end
 

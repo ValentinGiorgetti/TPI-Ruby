@@ -7,13 +7,15 @@ class AppointmentsController < ApplicationController
 
   def index
     begin
-      start_date = Date.strptime(params[:q][:date_time_gteq], '%Y-%m-%d')
+      start_date = Date.strptime(params[:q][:date_time_gteq], '%Y-%m-%d').beginning_of_day
+      params[:q][:date_time_gteq] = start_date
     rescue
       start_date = nil
     end
 
     begin
-      end_date = Date.strptime(params[:q][:date_time_lteq], '%Y-%m-%d')
+      end_date = Date.strptime(params[:q][:date_time_lteq], '%Y-%m-%d').end_of_day
+      params[:q][:date_time_lteq] = end_date
     rescue
       end_date = nil
     end
@@ -21,10 +23,11 @@ class AppointmentsController < ApplicationController
     if @professional
       @appointments = @professional.appointments
     else
-      @appointments = Appointment.not_finished
+      @appointments = Appointment.all
     end
 
-    @q = @appointments.between_dates(start_date, end_date).order(date_time: 'asc').ransack(params[:q] ? params[:q].except(:date_time_lteq).except(:date_time_gteq) : params[:q])
+    @q = @appointments.order(date_time: 'asc').ransack(params[:q])
+
     @appointments = @q.result.page(params[:page])
   end
 
