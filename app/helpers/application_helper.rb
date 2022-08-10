@@ -17,7 +17,7 @@ module ApplicationHelper
     end
 
     def generate_back_button
-        button_to 'Back', :back, button_options('primary')
+        button_to 'Back', :back, button_options('info')
     end
 
     def generate_edit_button

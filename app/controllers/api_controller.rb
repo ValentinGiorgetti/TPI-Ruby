@@ -10,7 +10,6 @@ class ApiController < ActionController::Base
         end
 
         if parameters[:page] && !check_positive_integer(parameters[:page])
-            pp 11
             return false
         end
 
@@ -116,7 +115,7 @@ class ApiController < ActionController::Base
             result = Appointment.find_by_professional_name(parameters[:professional_name]) if parameters[:professional_name]
         end
 
-        render json: result.page(parameters[:page])
+        render json: result.order(date_time: 'asc').page(parameters[:page])
     end
 
 end

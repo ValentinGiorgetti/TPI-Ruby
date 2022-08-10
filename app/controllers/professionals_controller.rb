@@ -5,7 +5,8 @@ class ProfessionalsController < ApplicationController
 
   # GET /professionals
   def index
-    @professionals = Professional.all
+    @q = Professional.ransack(params[:q])
+    @professionals = @q.result.page(params[:page])
   end
 
   # GET /professionals/1

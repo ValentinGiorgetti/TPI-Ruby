@@ -6,19 +6,26 @@ class AppointmentsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if @professional
-      @appointments = @professional.appointments.order(date_time: 'desc')
-    else
-      @appointments = Appointment.order(date_time: 'desc')
+    begin
+      start_date = Date.strptime(params[:q][:date_time_gteq], '%Y-%m-%d')
+    rescue
+      start_date = nil
     end
 
-    if request.post?
-      date = request.params["anything"]["date"]
-      if !date.empty?
-        date = Date.parse(date)
-        @appointments = @appointments.where(date_time: date.beginning_of_day..date.end_of_day)
-      end
+    begin
+      end_date = Date.strptime(params[:q][:date_time_lteq], '%Y-%m-%d')
+    rescue
+      end_date = nil
     end
+
+    if @professional
+      @appointments = @professional.appointments
+    else
+      @appointments = Appointment.not_finished
+    end
+
+    @q = @appointments.between_dates(start_date, end_date).order(date_time: 'asc').ransack(params[:q] ? params[:q].except(:date_time_lteq).except(:date_time_gteq) : params[:q])
+    @appointments = @q.result.page(params[:page])
   end
 
   def show

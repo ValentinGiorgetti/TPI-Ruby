@@ -40,6 +40,10 @@ class Appointment < ApplicationRecord
         date_time.strftime("%H:%M")
     end
 
+    def professional_name
+        self.professional.name
+    end
+
     def self.all_appointments_by_date(date, professional_id = "")
         appointments = Appointment.where(date_time: date.all_day)
 
@@ -69,7 +73,21 @@ class Appointment < ApplicationRecord
     end
 
     def self.between_dates(start_date, end_date)
-        Appointment.where(date_time: start_date.beginning_of_day..end_date.end_of_day)
+        if !start_date && !end_date
+            return Appointment.not_finished
+        end
+
+        if start_date && end_date
+            return Appointment.where(date_time: start_date.beginning_of_day..end_date.end_of_day)
+        end
+
+        if !end_date
+            return Appointment.where(date_time: start_date.beginning_of_day..start_date.end_of_day)
+        end
+
+        if !start_date
+            return Appointment.where(date_time: end_date.beginning_of_day..end_date.end_of_day)
+        end
     end
 
     def self.find_by_patient_name(name)
@@ -88,7 +106,7 @@ class Appointment < ApplicationRecord
         {
             id: self.id,
             patient: self.name + " " + self.surname,
-            professional: self.professional.name,
+            professional: self.professional_name,
             date: self.date,
             hour: self.hour
         }

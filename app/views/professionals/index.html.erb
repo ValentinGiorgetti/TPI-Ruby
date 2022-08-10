@@ -2,6 +2,14 @@
 
 <p id="notice"><%= notice %></p>
 
+<%= search_form_for @q, url: search_professionals_path, html: { method: :post } do |f| %>
+
+  <%= f.label 'Professional name' %>
+  <%= f.search_field :name_cont %>
+
+  <%= f.submit class: 'btn btn-sm btn-primary' %>
+<% end %><br>
+
 <div style="width:30%">
   <table class="table table-sm table-striped table-bordered">
     <thead>
@@ -30,6 +38,6 @@
   <h3>No professionals were found</h3>
 <% end %>
 
-<br>
+<%= paginate @professionals %>
 
 <%= button_to 'New professional', new_professional_path, button_options if can? :create, Professional %>

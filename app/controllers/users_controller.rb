@@ -3,13 +3,13 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def new_users
-    @users = User.where(new_user: true)
+    @users = User.where(new_user: true).page(params[:page])
     render :index
   end
 
   # GET /users
   def index
-    @users = User.all
+    @users = User.all.page(params[:page])
   end
 
   # GET /users/1

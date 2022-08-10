@@ -1,20 +1,27 @@
-<h1><%= @professional ? "#{@professional.name}'s appointments" : "Appointments"%></h1><br>
+<h1><%= @professional ? "#{@professional.name}'s appointments" : "Appointments"%></h1>
 
 <p id="notice"><%= notice %></p>
 
-<%= form_for :anything, url: filter_route(appointments_path) do |form| %>
+<%= search_form_for @q, url: @professional ? search_professional_appointments_path : search_appointments_path, html: { method: :post } do |f| %>
 
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.date_field :date %>
-  </div>
+  <%= f.label :name_cont, 'Patient name' %>
+  <%= f.search_field :name_cont %>
 
-  <div class="actions">
-    <%= form.submit 'Filter by date', :class => 'btn btn-success btn-sm', data: { disable_with: false } %>
-  </div>
+  <%= f.label :surname_cont, 'Patient surname' %>
+  <%= f.search_field :surname_cont %>
 
-<% end %><br>
+  <%= f.label :surname_cont, 'Professional name' %>
+  <%= f.search_field :professional_name_cont %>
 
+  <%= f.label :date_time_gteq, 'Start date' %>
+  <%= f.date_field  :date_time_gteq, 'datepicker' => true %>
+
+  <%= f.label :date_time_lteq, 'End date' %>
+  <%= f.date_field  :date_time_lteq, 'datepicker' => true %>
+  <br><br>
+  <%= f.submit class: 'btn btn-sm btn-primary' %>
+<% end %>
+<br>
 <table class="table table-striped table-bordered" style="width:60%">
   <thead>
     <tr>
@@ -32,7 +39,7 @@
         <td><%= appointment.name %></td>
         <td><%= appointment.surname %></td>
         <td><%= appointment.date_time_string %></td>
-        <td><%= link_to appointment.professional.name, appointment.professional %></td>
+        <td><%= link_to appointment.professional_name, appointment.professional %></td>
         <td>
           <%= link_to 'Show', route(appointment_path(appointment)) if can? :read, Appointment %>
           <%= link_to 'Edit', route(edit_appointment_path(appointment)) if can? :update, Appointment %>
@@ -47,7 +54,7 @@
   <h3>No appointments were found</h3>
 <% end %>
 
-<br>
+<%= paginate @appointments %>
 
 <% if not @professional %>
   <%= button_to 'New appointment', new_appointment_path, button_options if can? :create, Appointment %>
