@@ -15,13 +15,14 @@ User.create( [ {name: 'Oscar', surname: 'Castilla', email: 'admin@gmail.com', pa
 # Creating professionals
 
 100.times do |i|
-  Professional.create!(name: "Profesional #{i}")
+  Professional.create!(name: "Profesional#{i}")
 end
 
 #Creating appointments
 
-1000.times do |i|
+200.times do |i|
   Appointment.create!( professional_id: Professional.all.sample.id,
-                      name: "Nombre #{i}", surname: "Apellido #{i}",
-                      phone: i, date_time: rand(Time.now..(Time.now + 1.month)))
+                      name: "Nombre#{i}", surname: "Apellido#{i}",
+                      
+                      phone: i, date_time: DateTime.new(2022, [*9..12].sample, [*1..27].sample, [*14..18].sample, 0, 0))
 end
