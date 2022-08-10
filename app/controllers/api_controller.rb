@@ -113,6 +113,7 @@ class ApiController < ActionController::Base
             result = Appointment.find_by_patient_name(parameters[:patient_name]) if parameters[:patient_name]
             result = Appointment.find_by_patient_surname(parameters[:patient_surname]) if parameters[:patient_surname] 
             result = Appointment.find_by_professional_name(parameters[:professional_name]) if parameters[:professional_name]
+            result = Appointment.not_finished if not result
         end
 
         render json: result.order(date_time: 'asc').page(parameters[:page])

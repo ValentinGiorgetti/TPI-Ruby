@@ -99,7 +99,8 @@ class Appointment < ApplicationRecord
     end
 
     def self.find_by_professional_name(name)
-        Professional.find_by_name(name).collect{ | professional | professional.appointments }.flatten
+        appointments = Professional.find_by_name(name).collect{ | professional | professional.appointments }.flatten
+        Appointment.where(id: appointments.map(&:id))
     end
 
     def as_json(options = {})
