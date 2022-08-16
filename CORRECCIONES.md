@@ -2,6 +2,29 @@
 
 Las correcciones se irán versionando en este archivo.
 
+## Revisiones al 2022-08-16
+
+### Correcciones críticas
+
+* No se versiona el Gemfile.lock y **debe hacerse**
+* En el controller de appointment, el create setea una variable con todos los
+  profesionales. ¿Para qué? (Línea 51)
+
+### Sugerencias del profesor
+
+* ¿La API queda muy confusa como se implementó. Por qué no usar rutas al igual
+  que se usaron para los controllers que no son de la API?
+  * Hay solo 2 métodos sobrecargados cuando podrían ser más aplicando CRUD.
+    Incluso tener dos controllers separados para cada modelo
+  * La gestion de los parámetros es poco orientada a objetos y no se distribuye
+    en diferentes métodos, siendo un método muy cargado de responsabilidades
+    innecesarias
+  * No aprobecha las funcionalidades de librerías como ransack para implementar
+    funcionalidad. Podría ahorrar en codificación
+
+
+NOTA sugerida: 8
+
 ## Revisiones al 2022-08-09
 
 El código ahora sí se versiona en master. Correcciones de esta iteración
