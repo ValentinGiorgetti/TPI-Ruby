@@ -5,6 +5,8 @@ class Appointment < ApplicationRecord
     validates :name, :surname, format: { with: /^[a-z A-Z0-9]+$/, multiline: true }
 
     validate :validate_phone, :validate_date_time
+    
+    default_scope { order(date_time: 'asc') }
 
     scope :not_finished, -> { where("date_time > ?", Time.current) }
 
@@ -67,29 +69,6 @@ class Appointment < ApplicationRecord
         appointments
     end
 
-    def self.check_date_string(date)
-        raise ArgumentError if date.split("-").map{|number| number.scan(/\D/).empty?}.include?(false)
-        Date.strptime(date, '%d-%m-%Y')
-    end
-
-    def self.between_dates(start_date, end_date)
-        if !start_date && !end_date
-            return Appointment.not_finished
-        end
-
-        if start_date && end_date
-            return Appointment.where(date_time: start_date.beginning_of_day..end_date.end_of_day)
-        end
-
-        if !end_date
-            return Appointment.where(date_time: start_date.beginning_of_day..start_date.end_of_day)
-        end
-
-        if !start_date
-            return Appointment.where("date_time <= ?", end_date.end_of_day)
-        end
-    end
-
     def self.find_by_patient_name(name)
         Appointment.where(name: name)
     end
@@ -102,6 +81,10 @@ class Appointment < ApplicationRecord
         appointments = Professional.find_by_name(name).collect{ | professional | professional.appointments }.flatten
         Appointment.where(id: appointments.map(&:id))
     end
+    
+    def self.ransackable_scopes(auth_object = nil)
+        [:date, :week]
+    end
 
     def as_json(options = {})
         {
@@ -112,4 +95,7 @@ class Appointment < ApplicationRecord
             hour: self.hour
         }
     end
+
+    singleton_class.alias_method :date, :all_appointments_by_date
+    singleton_class.alias_method :week, :all_appointments_by_week
 end

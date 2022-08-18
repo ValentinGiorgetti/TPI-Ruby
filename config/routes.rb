@@ -11,6 +11,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    get 'professionals/:id', to: 'professionals#show'
+    get 'professionals', to: 'professionals#list'
+    get 'appointments/:id', to: 'appointments#show'
+    get 'appointments', to: 'appointments#list'
+  end
+
   resources :users
   resource :user, only: [:show, :edit, :update]
   get 'my_profile', to: 'users#show'
@@ -41,11 +48,6 @@ Rails.application.routes.draw do
     end
     post 'cancel_all_appointments', to: 'appointments#cancel_all'
     match 'appointments_filtered', to: 'appointments#index', via: [:get, :post]
-  end
-
-  scope :api do
-    get 'professionals', to: 'api#get_professionals'
-    get 'appointments', to: 'api#get_appointments'
   end
   
 end

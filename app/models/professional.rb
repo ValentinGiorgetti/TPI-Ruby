@@ -9,4 +9,11 @@ class Professional < ApplicationRecord
     def self.find_by_name(name)
         Professional.where(name: name)
     end
+
+    def as_json(options = {})
+        {
+            id: self.id,
+            name: self.name
+        }
+    end
 end
