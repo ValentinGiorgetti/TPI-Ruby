@@ -19,13 +19,14 @@ class ApiController < ActionController::Base
     end
 
     def show
-        render bad_parameters and return if !check_id(params[:id])
+        render bad_parameters and return if !check_positive_integer(params[:id])
         result = @class.find_by(id: params[:id])
         render not_found and return if !result
         render json: result
     end
 
     def list
+        render bad_parameters and return if params[:page] && (!check_positive_integer(params[:page]))
         result = @class.ransack(params).result.page(params[:page])
         render not_found and return if result.empty? 
         render json: add_pagination_info(result)

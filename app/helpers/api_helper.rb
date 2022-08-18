@@ -1,6 +1,6 @@
 module ApiHelper
-    def check_id(id)
-      id && (id.to_i.to_s == id) && (id.to_i >= 0)
+    def check_positive_integer(number)
+      (number.to_i.to_s == number) && (number.to_i >= 0)
     end
 
     def check_date_string(date)

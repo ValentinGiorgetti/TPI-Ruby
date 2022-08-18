@@ -10,6 +10,9 @@ class Appointment < ApplicationRecord
 
     scope :not_finished, -> { where("date_time > ?", Time.current) }
 
+    ransack_alias :patient_name, :name
+    ransack_alias :patient_surname, :surname
+
     def validate_phone
         if not phone.to_s.match(/^[\d]+$/)
             errors.add(:phone, "invalid")
