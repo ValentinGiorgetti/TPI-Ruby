@@ -24,5 +24,5 @@ end
   Appointment.create!( professional_id: Professional.all.sample.id,
                       name: "Nombre#{i}", surname: "Apellido#{i}",
                       
-                      phone: i, date_time: DateTime.new(2022, [*9..12].sample, [*1..27].sample, [*14..18].sample, 0, 0))
+                      phone: i, date_time: DateTime.new(2022, [*((Date.today.month + 1)%12)..12].sample, [*1..27].sample, [*14..18].sample, 0, 0))
 end
