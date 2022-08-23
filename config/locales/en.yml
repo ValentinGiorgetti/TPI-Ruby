@@ -30,4 +30,63 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      user: User
+      appointment: Appointment
+      professional: Professional
+    attributes:
+      professional:
+        name: Name
+    error_header_message: "Fix the following errors:"
+    successful:
+      messages: 
+        created: '%{model} successfully created'
+        updated: '%{model} successfully updated'
+  is_old: is old
+  invalid: invalid
+  administrator: Administrator
+  consultant: Consultant
+  assistant: Assistant
+  new: New
+  back: Back
+  edit: Edit
+  show: Show
+  delete: Delete
+  cancel: Cancel
+  appointments_list: Appointments list
+  confirm: Are you sure?
+  cant_edit_date_time: The date time can't be edited because the appointment is finished
+  appointment_finished: Appointment is finished
+  appointment_canceled: Appointment was successfully canceled
+  appointments_canceled: Appointments were successfully canceled
+  actions: Actions
+  not_found: No results found
+  me: (me)
+  start_date: Start date
+  end_date: End date
+  professionals: Professionals
+  appointments: Appointments
+  users: Users
+  export_appointments: Export appointments
+  my_profile: My profile
+  logout: Logout
+  log_in: Login
+  create: Create
+  finish: Finish
+  new_users: New users
+  cancel_all_appointments: Cancell all appointments
+  google_login: Successfully authenticated from Google account
+  dates: Date
+  week: Week
+  filter_by_date_week: Filter by date / week
+  filter_by_professional: Filter by professional
+  appointments_of_date: Appointments of date
+  hour_day: Hour / day
+  patient: Patient
+  appointments_from: Appointments from
+  to: to
+  pending_appointments: The professional can't be deleted because of pending appointment/s
+  professional_deleted: The professional and his/her appointment/s were successfully deleted
+  user_deleted: User was successfully deleted
+  own_user: You can't delete your own user

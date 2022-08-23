@@ -1,35 +1,35 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%=t("activerecord.attributes.appointment.name")%>:</strong>
   <%= @appointment.name %>
 </p>
 
 <p>
-  <strong>Surname:</strong>
+  <strong><%=t("activerecord.attributes.appointment.surname")%>:</strong>
   <%= @appointment.surname %>
 </p>
 
 <p>
-  <strong>Phone:</strong>
+  <strong><%=t("activerecord.attributes.appointment.phone")%>:</strong>
   <%= @appointment.phone %>
 </p>
 
 <p>
-  <strong>Notes:</strong>
+  <strong><%=t("activerecord.attributes.appointment.notes")%>:</strong>
   <%= @appointment.notes %>
 </p>
 
 <p>
-  <strong>Date time:</strong>
+  <strong><%=t("activerecord.attributes.appointment.date_time")%>:</strong>
   <%= @appointment.date_time_string %>
 </p>
 
 <p>
-  <strong>Professional:</strong>
+  <strong><%=t("activerecord.attributes.appointment.professional")%>:</strong>
   <%= @appointment.professional.name %>
 </p>
 
 <%= generate_edit_button if can? :update, Appointment %>       
-<%= button_to 'Cancel', route(appointment_path), button_options('danger', :delete).merge(data: { confirm: 'Are you sure?' }) if (!@appointment.finished? && can?(:destroy, Appointment)) %>
+<%= button_to 'Cancel', route(appointment_path), button_options('danger', :delete).merge(data: { confirm: t('confirm') }) if (!@appointment.finished? && can?(:destroy, Appointment)) %>
 <%= generate_back_button %>

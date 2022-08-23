@@ -1,4 +1,4 @@
-<h1>Export appointments</h1><br>
+<h1> <%= t('export_appointments') %> </h1><br>
 
 <%= form_for :form_data, url: appointments_exporter_submit_path do |form| %>
 
@@ -13,22 +13,25 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :date %>
+    <%= form.label t(:dates) %>
     <%= form.date_select :date, order: [:day, :month, :year] %>
   </div>
 
   <div class="field">
-    <%= form.label 'Filter by date / week' %>
-    <%= form.collection_select :filter_by, ["Week", "Date"], :itself, :itself %>
+    <%= form.label t('filter_by_date_week') %>
+    <select name="form_data[filter_by]" id="form_data_filter_by">
+      <option value="week"><%=t("week")%></option>
+      <option value="date"><%=t("dates")%></option>
+    </select>
   </div>
 
   <div class="field">
-    <%= form.label 'Filter by professional' %>
+    <%= form.label t('filter_by_professional') %>
     <%= form.collection_select :professional_id, @professionals, :id, :name, { include_blank: 'None' } %>
   </div><br>
   
   <div class="actions">
-    <%= form.submit 'Export appointments', :class => 'btn btn-success', data: { disable_with: false } %>
+    <%= form.submit t('export_appointments'), :class => 'btn btn-success', data: { disable_with: false } %>
   </div>
 
 <% end %>

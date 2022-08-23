@@ -17,7 +17,7 @@ module ApplicationHelper
     end
 
     def generate_back_button
-        button_to 'Back', :back, button_options('info')
+        button_to t('back'), :back, button_options('info')
     end
 
     def generate_edit_button
@@ -25,7 +25,7 @@ module ApplicationHelper
                   "professionals" => @professional ? edit_professional_path(@professional) : nil,
                   "users" => @user && current_user.role == "administrator" ? edit_user_path(@user) : "/user/edit"  }
 
-        button_to 'Edit', path[controller_name], button_options
+        button_to t('edit'), path[controller_name], button_options
     end
 
     def generate_show_button
@@ -33,6 +33,6 @@ module ApplicationHelper
                   "professionals" => @professional ? @professional : nil,
                   "users" => @user && current_user.role == "administrator" ? user_path(@user) : "/my_profile"  }        
 
-        button_to 'Show', path[controller_name], button_options
+        button_to t('show'), path[controller_name], button_options
     end
 end

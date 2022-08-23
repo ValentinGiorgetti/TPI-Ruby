@@ -1,22 +1,22 @@
-<h1><%= @professional ? "#{@professional.name}'s appointments" : "Appointments"%></h1>
+<h1><%= @professional ? "#{@professional.name} - #{t("appointments")}" : t("appointments")%></h1>
 
 <p id="notice"><%= notice %></p>
 
 <%= search_form_for @q, url: @professional ? search_professional_appointments_path : search_appointments_path, html: { method: :post } do |f| %>
 
-  <%= f.label :name_cont, 'Patient name' %>
+  <%= f.label :name_cont, t("activerecord.attributes.appointment.name") %>
   <%= f.search_field :name_cont %>
 
-  <%= f.label :surname_cont, 'Patient surname' %>
+  <%= f.label :surname_cont, t("activerecord.attributes.appointment.surname") %>
   <%= f.search_field :surname_cont %>
 
-  <%= f.label :surname_cont, 'Professional name' %>
+  <%= f.label :surname_cont, t("activerecord.attributes.appointment.professional") %>
   <%= f.search_field :professional_name_cont %>
 
-  <%= f.label :date_time_gteq, 'Start date' %>
+  <%= f.label :date_time_gteq, t('start_date') %>
   <%= f.date_field  :date_time_gteq, 'datepicker' => true %>
 
-  <%= f.label :date_time_lteq, 'End date' %>
+  <%= f.label :date_time_lteq, t('end_date') %>
   <%= f.date_field  :date_time_lteq, 'datepicker' => true %>
   <br><br>
   <%= f.submit class: 'btn btn-sm btn-primary' %>
@@ -25,11 +25,11 @@
 <table class="table table-striped table-bordered" style="width:60%">
   <thead>
     <tr>
-      <th class="text-center">Patient name</th>
-      <th class="text-center">Patient surname</th>
-      <th class="text-center">Date time</th>
-      <th class="text-center">Professional</th>
-      <th class="text-center">Actions</th>
+      <th class="text-center"><%=t("activerecord.attributes.appointment.name")%></th>
+      <th class="text-center"><%=t("activerecord.attributes.appointment.surname")%></th>
+      <th class="text-center"><%=t("activerecord.attributes.appointment.date_time")%></th>
+      <th class="text-center"><%=t("activerecord.attributes.appointment.professional")%></th>
+      <th class="text-center"><%=t("actions")%></th>
     </tr>
   </thead>
 
@@ -41,9 +41,9 @@
         <td><%= appointment.date_time_string %></td>
         <td><%= link_to appointment.professional_name, appointment.professional %></td>
         <td>
-          <%= link_to 'Show', route(appointment_path(appointment)) if can? :read, Appointment %>
-          <%= link_to 'Edit', route(edit_appointment_path(appointment)) if can? :update, Appointment %>
-          <%= link_to 'Cancel', route(appointment_path(appointment)), method: :delete, data: { confirm: 'Are you sure?' } if can?(:destroy, Appointment) && !appointment.finished? %>
+          <%= link_to t('show'), route(appointment_path(appointment)) if can? :read, Appointment %>
+          <%= link_to t('edit'), route(edit_appointment_path(appointment)) if can? :update, Appointment %>
+          <%= link_to t('cancel'), route(appointment_path(appointment)), method: :delete, data: { confirm: t('confirm') } if can?(:destroy, Appointment) && !appointment.finished? %>
         </td>
       </tr>
     <% end %>
@@ -51,14 +51,14 @@
 </table>
 
 <% if @appointments.empty? %>
-  <h3>No appointments were found</h3>
+  <h3><%=t("not_found")%></h3>
 <% end %>
 
 <%= paginate @appointments %>
 
 <% if not @professional %>
-  <%= button_to 'New appointment', new_appointment_path, button_options if can? :create, Appointment %>
+  <%= button_to "#{t("new")} #{t("activerecord.models.appointment")}", new_appointment_path, button_options if can? :create, Appointment %>
 <% else %>
-  <%= button_to 'New appointment', new_professional_appointment_path, button_options if can? :create, Appointment %>
-  <%= button_to 'Cancel all appointments', cancel_all_appointments_path, button_options('danger', :post).merge(data: { confirm: 'Are you sure?' }) if can? :destroy, Appointment %>
+  <%= button_to "#{t("new")} #{t("activerecord.models.appointment")}", new_professional_appointment_path, button_options if can? :create, Appointment %>
+  <%= button_to t('cancel_all_appointments'), cancel_all_appointments_path, button_options('danger', :post).merge(data: { confirm: t('confirm') }) if can? :destroy, Appointment %>
 <% end %>

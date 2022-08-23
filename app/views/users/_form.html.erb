@@ -1,8 +1,7 @@
 <%= form_with(model: user, url: (current_user.id == @user.id) ? '/user' : nil) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
+      <h2> <%= t("activerecord.error_header_message") %> </h2>
       <ul>
         <% user.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -39,6 +38,6 @@
   <% end %>
 
   <div class="actions">
-    <%= form.submit class: 'btn btn-sm btn-primary' %>
+    <%= form.submit t("finish"), class: 'btn btn-sm btn-primary' %>
   </div>
 <% end %>

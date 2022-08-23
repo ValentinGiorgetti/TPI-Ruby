@@ -51,7 +51,7 @@ class AppointmentsController < ApplicationController
     @professionals = Professional.all
     
     if @appointment.save
-      redirect_to route(appointment_path(@appointment)), notice: "Appointment was successfully created."
+      redirect_to route(appointment_path(@appointment)), notice: t('activerecord.successful.messages.created', model: t("activerecord.models.appointment"))
     else
       render :new, status: :unprocessable_entity
     end
@@ -59,7 +59,7 @@ class AppointmentsController < ApplicationController
 
   def update
     if @appointment.update(appointment_params)
-      redirect_to route(appointment_path(@appointment)), notice: "Appointment was successfully updated."
+      redirect_to route(appointment_path(@appointment)), notice: t('activerecord.successful.messages.updated', model: t("activerecord.models.appointment"))
     else
       render :edit, status: :unprocessable_entity
     end
@@ -67,10 +67,10 @@ class AppointmentsController < ApplicationController
 
   def destroy
     if @appointment.finished?
-      alert = "Appointment is finished"
+      alert = t("appointment_finished")
     else
       @appointment.destroy
-      notice = "Appointment was successfully canceled."
+      notice = t("appointment_canceled")
     end
 
     redirect_to route(appointments_path), notice: notice, alert: alert
@@ -78,7 +78,7 @@ class AppointmentsController < ApplicationController
 
   def cancel_all
     @professional.appointments.not_finished.destroy_all
-    redirect_to professional_appointments_path, notice: "Appointments were successfully canceled"
+    redirect_to professional_appointments_path, notice: t("appointments_canceled")
   end
 
   private

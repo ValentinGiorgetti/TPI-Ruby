@@ -1,8 +1,7 @@
 <%= form_with(model: professional) do |form| %>
   <% if professional.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(professional.errors.count, "error") %> prohibited this professional from being saved:</h2>
-
+    <h2> <%= t("activerecord.error_header_message") %> </h2>
       <ul>
         <% professional.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -17,6 +16,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit class: 'btn btn-sm btn-primary' %>
+    <%= form.submit t("finish"), class: 'btn btn-sm btn-primary' %>
   </div>
 <% end %>

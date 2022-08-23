@@ -31,5 +31,7 @@ module Polycon
     #
     config.time_zone = "Buenos Aires"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.i18n.default_locale = :es
   end
 end

@@ -14,14 +14,14 @@ class AppointmentsExporterController < ApplicationController
       rescue
         professional_name = nil
       end
-      if @form_data.filter_by == "Date"
+      if @form_data.filter_by == "date"
         appointments = Appointment.all_appointments_by_date(@form_data.date, @form_data.professional_id)
         AppointmentsExporterHelper.export_appointments_by_date(appointments, @form_data.date, professional_name)
       else
         appointments = Appointment.all_appointments_by_week(@form_data.date, @form_data.professional_id)
         AppointmentsExporterHelper.export_appointments_by_week(appointments, @form_data.date, professional_name)
       end
-      send_file AppointmentsExporterHelper.file_path(), type: 'image/jpeg'
+      send_file AppointmentsExporterHelper.file_path(), type: 'html'
     else
       render :index
     end

@@ -1,8 +1,7 @@
 <%= form_with(model: appointment, url: url) do |form| %>
   <% if appointment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
-
+      <h2> <%= t("activerecord.error_header_message") %> </h2>
       <ul>
         <% appointment.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -39,7 +38,7 @@
                                :end_hour => 21, :discard_minute => true %>
     </div>
   <% else %>
-    <p>The date time can't be edited because the appointment is finished </p>
+    <p><% t("cant_edit_date_time") %></p>
   <% end %>
 
   <% if not editing and not @professional %>
@@ -54,6 +53,6 @@
   <% end %>
 
   <div class="actions">
-    <%= form.submit class: 'btn btn-sm btn-primary' %>
+    <%= form.submit t("finish"), class: 'btn btn-sm btn-primary' %>
   </div>
 <% end %>

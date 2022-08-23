@@ -54,7 +54,7 @@ module AppointmentsExporterHelper
     end
 
     def self.get_day_of_week(day)
-        day.strftime("%A")
+        I18n.l(day, format: "%A").capitalize
     end
 
     def self.file_path()

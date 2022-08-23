@@ -1,4 +1,4 @@
-<h1><%= controller.action_name=="new_users" ? "New Users" : "Users" %></h1><br>
+<h1><%= controller.action_name=="new_users" ? "#{t("new")} #{t("users")}" : t("users") %></h1><br>
 
 <p id="notice"><%= notice %></p>
 <p style="color:red"><%= alert %></p>
@@ -6,11 +6,11 @@
 <table class="table table-sm table-striped table-bordered" style="width:50%">
   <thead>
     <tr>
-      <th class="text-center">Name</th>
-      <th class="text-center">Surname</th>
+      <th class="text-center"><%=t("activerecord.attributes.user.name")%></th>
+      <th class="text-center"><%=t("activerecord.attributes.user.surname")%></th>
       <th class="text-center">Email</th>
-      <th class="text-center">Role</th>
-      <th class="text-center">Actions</th>
+      <th class="text-center"><%=t("activerecord.attributes.user.role")%></th>
+      <th class="text-center"><%=t("actions")%></th>
     </tr>
   </thead>
 
@@ -20,11 +20,11 @@
         <td><%= user.name %></td>
         <td><%= user.surname %></td>
         <td><%= user.email %></td>
-        <td><%= user.role.capitalize %></td>
+        <td><%= t(user.role) %></td>
         <td>
-          <%= link_to 'Show', user %>
-          <%= link_to 'Edit', edit_user_path(user) %>
-          <%= user.email != current_user.email ? link_to('Delete', user, method: :delete, data: { confirm: 'Are you sure?' }) : "(me)" %>
+          <%= link_to t('show'), user %>
+          <%= link_to t('edit'), edit_user_path(user) %>
+          <%= user.email != current_user.email ? link_to(t('delete'), user, method: :delete, data: { confirm: t('confirm') }) : t('me') %>
         </td>
       </tr>
     <% end %>
@@ -32,12 +32,12 @@
 </table>
 
 <% if @users.empty? %>
-  <h3>No users were found</h3>
+  <h3><%=t("not_found")%></h3>
 <% end %>
 
 <br>
 
 <%= paginate @users %>
 
-<%= button_to 'Create User', new_user_path, button_options %>
-<%= button_to 'New Users', new_users_path, button_options %>
+<%= button_to "#{t("create")} #{t("activerecord.models.user")}", new_user_path, button_options %>
+<%= button_to t("new_users"), new_users_path, button_options %>

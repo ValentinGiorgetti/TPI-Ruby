@@ -27,7 +27,7 @@ class ProfessionalsController < ApplicationController
     @professional = Professional.new(professional_params)
 
     if @professional.save
-      redirect_to @professional, notice: "Professional was successfully created."
+      redirect_to @professional, notice: t('activerecord.successful.messages.created', model: t("activerecord.models.professional"))
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class ProfessionalsController < ApplicationController
   # PATCH/PUT /professionals/1
   def update
     if @professional.update(professional_params)
-      redirect_to @professional, notice: "Professional was successfully updated."
+      redirect_to @professional, notice: t('activerecord.successful.messages.updated', model: t("activerecord.models.professional"))
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,10 +45,10 @@ class ProfessionalsController < ApplicationController
   # DELETE /professionals/1
   def destroy
     if @professional.has_pending_appointments?
-      alert = "The professional can't be deleted because of pending appointment/s"
+      alert = t("pending_appointments")
     else
       @professional.destroy
-      notice = "The professional and his/her appointment/s were successfully destroyed"
+      notice = t("professional_deleted")
     end
     
     redirect_to professionals_url, notice: notice, alert: alert

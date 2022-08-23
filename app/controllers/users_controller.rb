@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to @user, notice: "User was successfully created"
+      redirect_to @user, notice: t('activerecord.successful.messages.created', model: t("activerecord.models.user"))
     else
       render :new, status: :unprocessable_entity
     end
@@ -41,9 +41,9 @@ class UsersController < ApplicationController
     if @user.update(user_params.compact_blank)
       if current_user.role == "administrator" 
         @user.update(new_user: false)
-        redirect_to @user, notice: "User was successfully updated"
+        redirect_to @user, notice: t('activerecord.successful.messages.updated', model: t("activerecord.models.user"))
       else
-        redirect_to '/my_profile', notice: "User was successfully updated"
+        redirect_to '/my_profile', notice: t('activerecord.successful.messages.updated', model: t("activerecord.models.user"))
       end
     else
       render :edit
@@ -56,9 +56,9 @@ class UsersController < ApplicationController
 
     if @user.email != current_user.email
       @user.destroy
-      notice = "User was successfully destroyed"
+      notice = t("user_deleted")
     else
-      notice = "You can't delete your own user"
+      notice = t("own_user")
     end
 
     redirect_to users_url, notice: notice
@@ -71,9 +71,9 @@ class UsersController < ApplicationController
 
     def set_roles
       if current_user.role == "administrator"
-        @roles = [ ["Administrator", "administrator"],
-                  ["Consultant", "consultant"],
-                  ["Assistant", "assistant"] ]
+        @roles = [ [I18n.t("administrator"), "administrator"],
+                  [I18n.t("consultant"), "consultant"],
+                  [I18n.t("assistant"), "assistant"] ]
       else
         @roles = [ [current_user.role.capitalize, current_user.role] ]
       end

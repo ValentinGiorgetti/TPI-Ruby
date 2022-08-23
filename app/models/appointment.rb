@@ -15,7 +15,7 @@ class Appointment < ApplicationRecord
 
     def validate_phone
         if not phone.to_s.match(/^[\d]+$/)
-            errors.add(:phone, "invalid")
+            errors.add(:phone, I18n.t(:invalid))
         end
     end
 
@@ -25,7 +25,7 @@ class Appointment < ApplicationRecord
 
     def validate_date_time
         if (finished? and (date_time_was != date_time))
-            errors.add(:date_time, "is old")
+            errors.add(:date_time, I18n.t(:is_old))
         end
     end
 

@@ -1,10 +1,10 @@
-<h1>Professionals</h1><br>
+<h1><%=t("professionals")%></h1><br>
 
 <p id="notice"><%= notice %></p>
 
 <%= search_form_for @q, url: search_professionals_path, html: { method: :post } do |f| %>
 
-  <%= f.label 'Professional name' %>
+  <%= f.label t("activerecord.attributes.professional.name") %>
   <%= f.search_field :name_cont %>
 
   <%= f.submit class: 'btn btn-sm btn-primary' %>
@@ -14,8 +14,8 @@
   <table class="table table-sm table-striped table-bordered">
     <thead>
       <tr>
-        <th class="text-center">Name</th>
-        <th class="text-center">Actions</th>
+        <th class="text-center"><%=t("activerecord.attributes.professional.name")%></th>
+        <th class="text-center"><%=t("actions")%></th>
       </tr>
     </thead>
 
@@ -24,9 +24,9 @@
         <tr class="text-center">
           <td><%= professional.name %></td>
           <td>
-            <%= link_to 'Show', professional if can? :read, Professional %>
-            <%= link_to 'Edit', edit_professional_path(professional) if can? :update, Professional %>
-            <%= link_to 'Delete', professional, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, Professional %>
+            <%= link_to t('show'), professional if can? :read, Professional %>
+            <%= link_to t('edit'), edit_professional_path(professional) if can? :update, Professional %>
+            <%= link_to t('delete'), professional, method: :delete, data: { confirm: t('confirm') } if can? :destroy, Professional %>
           </td>
         </tr>
       <% end %>
@@ -35,9 +35,9 @@
 </div>
 
 <% if @professionals.empty? %>
-  <h3>No professionals were found</h3>
+  <h3><%=t("not_found")%></h3>
 <% end %>
 
 <%= paginate @professionals %>
 
-<%= button_to 'New professional', new_professional_path, button_options if can? :create, Professional %>
+<%= button_to "#{t("new")} #{t("activerecord.models.professional")}", new_professional_path, button_options if can? :create, Professional %>

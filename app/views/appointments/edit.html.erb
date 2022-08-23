@@ -1,4 +1,4 @@
-<h1>Editing Appointment</h1>
+<h1><%= t("edit") %> <%= t("activerecord.models.appointment") %></h1>
 
 <%= render 'form', appointment: @appointment, editing: true, add_date_time_field: !Appointment.find(@appointment.id).finished?, url: route(appointment_path) %>
 

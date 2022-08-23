@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Professional name:</strong>
+  <strong><%=t("activerecord.attributes.professional.name")%>:</strong>
   <%= @professional.name %>
 </p>
 
 <%= generate_edit_button if can? :update, Professional %>
-<%= button_to 'Appointments list', professional_appointments_path(@professional), button_options('info') if can? :read, Appointment %>
+<%= button_to t('appointments_list'), professional_appointments_path(@professional), button_options('info') if can? :read, Appointment %>
 <%= generate_back_button %>
