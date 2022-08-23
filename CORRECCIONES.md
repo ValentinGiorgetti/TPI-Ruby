@@ -2,6 +2,17 @@
 
 Las correcciones se irán versionando en este archivo.
 
+## Revisiones al 2022-08-23
+
+### Correcciones críticas
+
+* El cambio de lógica para generar los Appointments de forma aleatorea no es
+  adecuada. De hecho se repiten fechas y no se generan todas las esperadas
+  * `git show 77ff262a`
+* No se implementaron las traducciones [usando I18N](https://guides.rubyonrails.org/i18n.html)
+
+**NOTA sugerida: 9**
+
 ## Revisiones al 2022-08-16
 
 ### Correcciones críticas
@@ -16,14 +27,14 @@ Las correcciones se irán versionando en este archivo.
   que se usaron para los controllers que no son de la API?
   * Hay solo 2 métodos sobrecargados cuando podrían ser más aplicando CRUD.
     Incluso tener dos controllers separados para cada modelo
-  * La gestion de los parámetros es poco orientada a objetos y no se distribuye
+  * La gestión de los parámetros es poco orientada a objetos y no se distribuye
     en diferentes métodos, siendo un método muy cargado de responsabilidades
     innecesarias
-  * No aprobecha las funcionalidades de librerías como ransack para implementar
+  * No aprovecha las funcionalidades de librerías como ransack para implementar
     funcionalidad. Podría ahorrar en codificación
 
 
-NOTA sugerida: 8
+**NOTA sugerida: 8**
 
 ## Revisiones al 2022-08-09
 
