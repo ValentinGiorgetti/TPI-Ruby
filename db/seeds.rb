@@ -23,9 +23,9 @@ end
 200.times do |i|
   begin
     Appointment.create!( professional_id: Professional.all.sample.id,
-                        name: "Nombre#{i}", surname: "Apellido#{i}",
-                        
-                        phone: i, date_time: DateTime.new([*Date.today.year..(Date.today.year + 2)].sample, [*((Date.today.month + 1)%12)..12].sample, [*1..27].sample, [*14..18].sample, 0, 0))
+                        name: "Nombre#{i}", surname: "Apellido#{i}", phone: i,                        
+                        date_time: rand(Time.now..(Time.now + 1.year)).change(hour: [*12..19].sample))
   rescue
+    redo
   end
 end
